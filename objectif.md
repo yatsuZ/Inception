@@ -1,22 +1,8 @@
 # Objectifs du Projet Inception
 
-## Table of Contents / Sommaire
-- [Objectifs du Projet Inception](#objectifs-du-projet-inception)
-	- [Table of Contents / Sommaire](#table-of-contents--sommaire)
-	- [Introduction](#introduction)
-	- [Objectifs](#objectifs)
-	- [Objectifs détaillés](#objectifs-détaillés)
-		- [Rendus](#rendus)
-		- [Consignes](#consignes)
-		- [Interdictions](#interdictions)
-		- [Mise en place](#mise-en-place)
-		- [Conseils](#conseils)
-		- [Paramétrage des services mis en place](#paramétrage-des-services-mis-en-place)
-	- [Exemple de structure attendue](#exemple-de-structure-attendue)
-
 ## Introduction
 
-Ce fichier détaille les objectifs spécifiques du projet "Inception" en fonction du [sujet fourni](./fr.subject.Inception.pdf).
+Ce fichier détaille les objectifs spécifiques du projet "Inception" en fonction du sujet fourni dans `fr.subject.Inception.pdf`.
 
 ## Objectifs
 
@@ -162,3 +148,24 @@ MYSQL_USER=XXXXXXXXXXXX
 $>
 ```
 
+## Bonus
+
+### Consigne
+
+Il vous faudra écrire un Dockerfile par service supplémentaire. Ainsi, chaque service tournera dans un conteneur dédié et, si besoin, possédera son propre volume.
+
+### Liste de bonus
+
+- Mettre en place Redis Cache pour votre WordPress afin de gérer le cache proprement.
+- Mettre en place un serveur FTP pointant vers le volume de votre site WordPress.
+- Créer un petit site statique dans le langage de votre choix (sauf PHP), par exemple un site vitrine ou un site de présentation de votre CV.
+- Mettre en place Adminer.
+- Mettre en place un service de votre choix qui vous semble utile. Vous devrez justifier ce choix lors de la soutenance.
+
+### Conseil
+
+Dans le cadre des bonus, vous avez la possibilité de mettre en place d’autres services. Dans ce cas, il pourra y avoir plus de ports ouverts selon vos besoins.
+
+## Conclusion
+
+Ces objectifs sont conçus pour garantir une compréhension approfondie de la virtualisation et de la conteneurisation, tout en fournissant une expérience pratique dans la configuration et la gestion d'une infrastructure conteneurisée.
