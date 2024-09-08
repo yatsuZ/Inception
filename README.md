@@ -9,10 +9,12 @@ L'objectif principal est de créer et gérer une infrastructure de plusieurs ser
 
 | Tâche | Statut |
 |-------|--------|
-| Rédiger le readme | ✔️ |
-| Lire le sujet et rédiger les objectifs| ✔️ |
-| Ecrire dans documentation tout les notion que j'ai pas compris dans mes objectif | ✔️ |
-| Rediger ce aue je fais etape par etape | ❌ |
+| Rédiger le README | ✔️ |
+| Lire le sujet et rédiger les objectifs | ✔️ |
+| Écrire dans la documentation toutes les notions que je n'ai pas comprises dans mes objectifs | ✔️ |
+| Rédiger ce que je fais étape par étape | ✔️ |
+| Étape 1 : [Création de la VM](./etape/1_Creation_de_la_VM.md) | ✔️ |
+| Étape 2 : Installer Docker | ❌ |
 
 ## Structure du projet
 
