@@ -7,6 +7,10 @@ Ce fichier contient toutes les sources utiles à la création du projet.
 - [Introduction](#introduction)
 - [Configuration de l'environnement](#configuration-de-lenvironnement)
 	- [Concepts de Virtualisation](#concepts-de-virtualisation)
+	- [Hyperviseurs / Logiciels de virtualisation](#hyperviseurs--logiciels-de-virtualisation)
+		- [Types d'hyperviseurs](#types-dhyperviseurs)
+		- [Avantages des hyperviseurs](#avantages-des-hyperviseurs)
+		- [Fonctionnement d'un hyperviseur](#fonctionnement-dun-hyperviseur)
 - [Configuration de Docker et Docker Compose](#configuration-de-docker-et-docker-compose)
 	- [Docker](#docker)
 	- [Docker Compose](#docker-compose)
@@ -49,6 +53,32 @@ Ce document a pour but de fournir des explications claires et concises sur les d
 - Simplification de la gestion et de la maintenance.
 
 **VM (Machine Virtuelle)** : Un environnement d'exécution isolé, émulant un système physique complet, permettant d'exécuter des systèmes d'exploitation et des applications comme si c'était sur un matériel dédié.
+
+### Hyperviseurs / Logiciels de virtualisation
+
+Un **hyperviseur**, aussi appelé **logiciel de virtualisation**, est un programme qui permet de créer, exécuter et gérer plusieurs machines virtuelles (VM) sur un seul ordinateur physique. Il agit comme une couche intermédiaire entre le matériel de l'ordinateur et les machines virtuelles, permettant ainsi de partager les ressources (CPU, mémoire, réseau, etc.) de manière isolée et contrôlée.
+
+#### Types d'hyperviseurs
+
+1. **Hyperviseur de Type 1 (Bare-metal)** :
+   - Il s'exécute directement sur le matériel physique, sans passer par un système d'exploitation hôte.
+   - Principalement utilisé dans les serveurs ou pour des environnements de production.
+   - Exemples : **Hyper-V**, **KVM**, **Proxmox VE**.
+
+2. **Hyperviseur de Type 2 (Hosted)** :
+   - Il s'exécute au-dessus d'un système d'exploitation déjà installé (comme Windows ou Linux).
+   - Principalement utilisé pour des environnements de test ou de développement sur des ordinateurs personnels.
+   - Exemples : **VirtualBox**, **VMware Workstation**.
+
+#### Avantages des hyperviseurs
+
+- **Isolation** : Chaque VM fonctionne indépendamment des autres, évitant les conflits entre applications.
+- **Meilleure utilisation des ressources** : Permet d'utiliser pleinement les ressources du matériel physique en exécutant plusieurs systèmes d'exploitation.
+- **Flexibilité** : Capacité d'exécuter plusieurs systèmes d'exploitation (Windows, Linux, etc.) simultanément sur la même machine.
+
+#### Fonctionnement d'un hyperviseur
+
+L'hyperviseur alloue dynamiquement des ressources matérielles à chaque VM. Chaque VM se comporte comme une machine indépendante avec son propre OS et ses applications, bien qu'elles partagent toutes le même matériel sous-jacent.
 
 ## Configuration de Docker et Docker Compose
 

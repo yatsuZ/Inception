@@ -2,7 +2,8 @@
 
 ## Objectif général
 
-"Inception" est un projet d'administration système que j'ai conçu pour approfondir mes compétences en virtualisation et conteneurisation en utilisant Docker. L'objectif principal est de créer et gérer une infrastructure de plusieurs services conteneurisés dans un environnement virtualisé.
+"Inception" est un projet d'administration système, il approfondiras mes compétences en virtualisation et conteneurisation en utilisant Docker.
+L'objectif principal est de créer et gérer une infrastructure de plusieurs services conteneurisés dans un environnement virtualisé.
 
 ## À faire
 
@@ -10,7 +11,8 @@
 |-------|--------|
 | Rédiger le readme | ✔️ |
 | Lire le sujet et rédiger les objectifs| ✔️ |
-| Ecrire dans documentation tout les notion que j'ai pas compris dans mes objectif | ❌ |
+| Ecrire dans documentation tout les notion que j'ai pas compris dans mes objectif | ✔️ |
+| Rediger ce aue je fais etape par etape | ❌ |
 
 ## Structure du projet
 
