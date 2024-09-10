@@ -3,6 +3,16 @@
 Premiere etape du projet crée la Machine Virtuel (VM).
 danc ce fichier, il y aura
 
+- [1 Creation de la VM](#1-creation-de-la-vm)<br>
+			- [Notion à savoir](#notion-à-savoir)<br>
+			- [Virtualisation](#virtualisation)<br>
+			- [ISO et OS](#iso-et-os)<br>
+	- [Quoi choisire](#quoi-choisire)
+	- [Quelle Hyperviseur / Logiciel de virtualisation?](#quelle-hyperviseur--logiciel-de-virtualisation)
+		- [Choix d'un OS](#choix-dun-os)
+	- [Les différentes architectures](#les-différentes-architectures)
+	- [Comment la crée VM?](#comment-la-crée-vm)
+
 
 ### Notion à savoir
 
