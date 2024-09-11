@@ -90,6 +90,8 @@ L'hyperviseur alloue dynamiquement des ressources matérielles à chaque VM. Cha
 
 **Docker Compose** : Un outil pour définir et gérer des applications multi-conteneurs Docker. Avec Docker Compose, vous utilisez un fichier `docker-compose.yml` pour configurer les services de votre application. Ensuite, une seule commande permet de créer et de démarrer tous les services à partir de votre configuration.
 
+![fonctionement de docker](./../ilustration/fonctionment_docker.png)
+
 **Fichier `docker-compose.yml`** : Un fichier de configuration en YAML pour définir les services, réseaux et volumes nécessaires à votre application Docker.
 
 ### Conteneurisés
