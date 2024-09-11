@@ -1,4 +1,4 @@
-# 2 Installation de docker
+# 2 Installation de docker et docker compose
 
 Deuxieme etape du projet Instalation de docker.
 voici ce qu'il y aura :
@@ -16,7 +16,11 @@ Les conteneurs sont des environnements légers et portables qui isolent les appl
 ## Permet de faire quoi ?
 
 En resumée c'est sa qui permetre de faire fonctioner des service / application comme nginx mariadb et wordpress peut importe l'os de base.
-et de les faire intergire entre eux.
+
+et docker compose permet de gere de multpile image de les faire intergire entre eux.
+
+[docmentation docker vs docker-compose](./../concepts/docker_vs_docker_compose.md)
+
 
 - **Isolation** : Les conteneurs permettent d'exécuter des applications dans des environnements isolés, réduisant les conflits entre les dépendances.
 - **Portabilité** : Les conteneurs Docker peuvent être déployés sur n'importe quel système prenant en charge Docker, que ce soit en local, sur un serveur ou dans le cloud.
@@ -27,6 +31,22 @@ et de les faire intergire entre eux.
 ## Comment l'installer
 
 ### Sur Alpine
+
+0. **Ajouter le Dépôt Community**
+
+Docker peut être dans le dépôt `community`. Assure-toi que ce dépôt est activé dans ton fichier `/etc/apk/repositories`. Tu peux le vérifier en ouvrant ce fichier avec un éditeur de texte comme `vi` :
+
+```sh
+vi /etc/apk/repositories
+```
+
+Assure-toi que la ligne suivante est présente (ajoute-la si nécessaire) :
+
+```sh
+http://dl-cdn.alpinelinux.org/alpine/v3.15/community
+```
+
+(Remplace `v3.15` par la version d'Alpine que tu utilises.)
 
 1. **Mettre à jour les paquets :**
 
@@ -52,3 +72,37 @@ et de les faire intergire entre eux.
    ```sh
    docker --version
    ```
+
+#### installation de docker compose
+
+1. **Mettre à jour les paquets :**
+
+   ```sh
+   apk update
+   ```
+
+2. **Installation des dépendances :**
+
+   ```sh
+   apk add --no-cache curl py3-pip
+   ```
+
+3. **Téléchargement de la dernière version stable de Docker Compose:**
+
+   ```sh
+   DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4)
+   curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   ```
+
+4. **Droit dexecution de docker-compose :**
+
+   ```sh
+   chmod +x /usr/local/bin/docker-compose
+   ```
+
+4. **Vérifier que Docker-Compose fonctionne correctement :**
+
+   ```sh
+   docker-compose --version
+   ```
+

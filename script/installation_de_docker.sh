@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Installation de docker sur alpine
+
 # Mise a jour des paquets
 apk update
 
