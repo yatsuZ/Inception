@@ -5,6 +5,7 @@ Ce fichier contient toutes les sources utiles à la création du projet.
 ### Table des matières
 
 - [Introduction](#introduction)
+	- [Lien externe](#lien-externe)
 - [Configuration de l'environnement](#configuration-de-lenvironnement)
 	- [Concepts de Virtualisation](#concepts-de-virtualisation)
 	- [Hyperviseurs / Logiciels de virtualisation](#hyperviseurs--logiciels-de-virtualisation)
@@ -42,6 +43,10 @@ Ce fichier contient toutes les sources utiles à la création du projet.
 ## Introduction
 
 Ce document a pour but de fournir des explications claires et concises sur les différents concepts, outils, et technologies utilisés dans le projet "Inception".
+
+### Lien externe
+
+Cours sur docker : https://www.nicelydev.com/docker
 
 ## Configuration de l'environnement
 

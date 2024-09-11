@@ -15,7 +15,8 @@ L'objectif principal est de créer et gérer une infrastructure de plusieurs ser
 | Rédiger ce que je fais étape par étape | ✔️ |
 | Étape 1 : [Création de la VM](./etape/1_Creation_de_la_VM.md) | ✔️ |
 | Étape 1.5 : [Installer et utiliser ssh](./etape/1-5_SSH_utilisation.md) | ✔️ |
-| Étape 2 : [Installation de Docker](./etape/2_installation_de_docker.md) | ❌ |
+| Étape 2 : [Installation de Docker](./etape/2_installation_de_docker.md) | ✔️ |
+| Étape 3 : [Configuration de Docker-compose](./etape/3_configuration_de_docker_compose.md) | ❌ |
 
 ## Structure du projet
 
