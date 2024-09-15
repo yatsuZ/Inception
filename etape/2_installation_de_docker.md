@@ -5,7 +5,7 @@ voici ce qu'il y aura :
 
 ## C'est quoi ?
 
-![docker ilustration](./../ilustration/docker.png.png)
+![docker ilustration](./../ilustration/docker.png)
 
 Il y a des explication dans la [documentation](./../concepts/documentation.md#docker).
 Mais voici un rapelle.

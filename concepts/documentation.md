@@ -137,7 +137,7 @@ L'hyperviseur alloue dynamiquement des ressources matérielles à chaque VM. Cha
 
 **NGINX** : Un serveur web et un reverse proxy performant, souvent utilisé pour servir des sites web statiques, comme proxy pour des serveurs applicatifs, ou pour équilibrer la charge.
 
-**TLSv1.2 ou TLSv1.3** : Versions de Transport Layer Security (TLS), un protocole de cryptage utilisé pour sécuriser les communications sur Internet.
+**TLSv1.2 ou TLSv1.3** : Versions de Transport Layer Security (TLS), un protocole de chiffrement utilisé pour sécuriser les communications sur Internet.
 
 ### WordPress et PHP-FPM
 
