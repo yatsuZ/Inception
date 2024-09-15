@@ -139,6 +139,8 @@ L'hyperviseur alloue dynamiquement des ressources matérielles à chaque VM. Cha
 
 **TLSv1.2 ou TLSv1.3** : Versions de Transport Layer Security (TLS), un protocole de chiffrement utilisé pour sécuriser les communications sur Internet.
 
+[video explicatif et TLS](https://youtu.be/7W7WPMX7arI?si=0S2nsb-5eFJqXB-b)
+
 ### WordPress et PHP-FPM
 
 **WordPress** : Un système de gestion de contenu (CMS) open-source utilisé pour créer des sites web et des blogs.

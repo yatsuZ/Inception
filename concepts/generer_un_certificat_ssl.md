@@ -58,6 +58,26 @@ openssl req -x509 -new -nodes -key private-key.pem -sha256 -days 365 -out cert.p
 
 ---
 
+### Extensions de Fichiers SSL/TLS
+
+1. **.pem** (Privacy Enhanced Mail)
+   - **Description** : Format de fichier encodé en base64 pour les certificats et les clés. Peut contenir des certificats, des clés privées, ou des chaînes de certificats.
+   - **Utilisation** : Généralement utilisé pour stocker des certificats et des clés sur les serveurs.
+
+2. **.key**
+   - **Description** : Fichier contenant une clé privée, utilisée pour le chiffrement et le déchiffrement des données.
+   - **Utilisation** : Stocké en toute sécurité sur le serveur pour déchiffrer les communications sécurisées.
+
+3. **.csr** (Certificate Signing Request)
+   - **Description** : Fichier contenant une demande de signature de certificat envoyée à une autorité de certification. Contient la clé publique et des informations sur l'organisation.
+   - **Utilisation** : Généré lors de la demande d'un certificat SSL/TLS auprès d'une CA.
+
+4. **.crt** (Certificate)
+   - **Description** : Fichier contenant un certificat SSL/TLS signé par une autorité de certification. Utilisé pour valider l'identité d'un serveur.
+   - **Utilisation** : Installé sur un serveur web pour activer le HTTPS.
+
+---
+
 ## Conclusion
 
 OpenSSL est un outil puissant pour gérer le chiffrement, les certificats SSL/TLS, et sécuriser les communications sur Internet. La génération de clés publiques/privées et la gestion des certificats sont des fonctionnalités clés, utilisées pour établir des connexions sécurisées.
@@ -69,3 +89,4 @@ OpenSSL est un outil puissant pour gérer le chiffrement, les certificats SSL/TL
 - [OpenSSL Documentation](https://www.openssl.org/docs/)
 - [Tutoriel de base sur OpenSSL - DigitalOcean](https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs)
 - [Certificats SSL/TLS avec Let's Encrypt](https://letsencrypt.org/fr/how-it-works/)
+- [Understanding SSL Certificates](https://www.ssl.com/faqs/what-is-an-ssl-certificate/)

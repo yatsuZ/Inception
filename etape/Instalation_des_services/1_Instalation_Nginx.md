@@ -45,9 +45,11 @@ WORKDIR /etc/nginx
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-2. **Configurer TLS dans Nginx**  
-   - Générer un certificat SSL avec OpenSSL ou utiliser Let's Encrypt.
+2. **Configurer TLS dans Nginx**
+   - Générer un certificat SSL avec OpenSSL ou utiliser Let's Encrypt. :
+     - [Comment generer un certificat](./../../concepts/generer_un_certificat_ssl.md)
    - Modifier la configuration de Nginx pour supporter TLSv1.3 et pointer vers le certificat.
+     - [comment configurer Nginx](./../../concepts/configuration_de_nginx.md)
 
 3. **Mettre à jour `docker-compose.yml`**  
    Ajouter un service pour Nginx, en spécifiant le Dockerfile et en mappant les ports 80 et 443.
