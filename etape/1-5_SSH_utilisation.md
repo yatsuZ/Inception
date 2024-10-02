@@ -1,9 +1,9 @@
 # 1.5 Utilisation de SSH
 
-> Optionelle
+> Optionelle mais qui rend tres utile et permetra de faire des copier coller depuis votre pc hote et la vm
 
 Étape intermédiaire après [la création de la VM](./1_Creation_de_la_VM.md).<br>
-Ce fichier a pour objectif de documenter l'installation et la configuration de SSH afin de pouvoir manipuler la VM à distance.<br>
+Ce fichier a pour objectif de documenter l'installation et la configuration de SSH afin de pouvoir manipuler la VM à distance pour les OS qui viennent de linux pour windows je ne sais pas encore.<br>
 Cela me permet de gérer la VM plus facilement et d'être plus à l'aise dans son administration, plutôt que de travailler directement depuis son interface.
 
 ## Qu'est-ce que SSH ?
