@@ -61,19 +61,8 @@ VirtualBox est celui utilisé sur les PC de l'école. J'ai déjà travaillé des
 
 ### Choix d'un OS
 
-Pour le projet, il est recommandé de choisir un OS léger et adapté aux conteneurs Docker, comme **Debian** ou **Alpine**. Tu utiliseras un fichier ISO pour installer cet OS dans ta machine virtuelle. 
-
-| **Critères** | **Debian** | **Alpine** |
-|--------------|------------|------------|
-| **Avantages** | - Facilité d'utilisation et de configuration. <br> - Large communauté et support. <br> - Bonnes pratiques de sécurité. <br> - Nombreux paquets disponibles dans les dépôts. | - Très léger, ce qui réduit l'utilisation des ressources. <br> - Conçu pour les environnements de conteneurs. <br> - Boot rapide et empreinte minimale. <br> - Sécurité renforcée avec des pratiques de sécurité strictes. |
-| **Inconvénients** | - Plus lourd que Alpine, donc peut consommer plus de ressources. <br> - Les mises à jour peuvent être moins fréquentes. <br> - Plus complexe à optimiser pour des environnements très légers. | - Moins de documentation et de support par rapport à Debian. <br> - Moins de paquets disponibles dans les dépôts par défaut. <br> - La courbe d'apprentissage peut être plus raide pour les utilisateurs moins expérimentés. <br> - Configuration initiale peut être plus complexe. |
-
-**Résumé :**
-
-- **Debian** est généralement plus facile à utiliser, avec un bon support et une large base d'utilisateurs, mais peut être un peu plus lourd.
-- **Alpine** est très léger et optimisé pour les conteneurs, mais peut nécessiter plus d'efforts pour la configuration et a une base de support plus limitée.
-
-> Je choisi Alpine, car d'un point de vu pedagogie c'est plus pertiannt de voir diferent os.
+OSEF HAHAHA car le but de co projet nous aprend que peut importe l'os docker nous permetra d'utilise les services.
+juste pour le projet installer un os avec une interface graphique.
 
 ---
 
@@ -96,12 +85,18 @@ Les systèmes d'exploitation peuvent être adaptés à différentes architecture
 
 ## Comment la crée VM?
 
+Franchement debrouiller vous sinon voici une demo :
+
+### Instalation pour alpine sur virtualbox :
+
 1. Avoir l'iso d'alpine, [lien](https://alpinelinux.org/downloads/) des differents iso d'alpine :
 J'ai choisi x86_64.
 ![different architecture d'iso](./../ilustration/different_iso.png)
 
 [Video de demonstration](https://youtu.be/X7R5oBTb-Tg?si=Z48xGkNkVboBPeya)
 documentation d'alpine : https://wiki.alpinelinux.org/wiki/Main_Page
+
+et suivre ve [tuto](https://www.linuxtricks.fr/wiki/alpine-linux-installer-un-environnement-de-bureau-xfce#:~:text=xf86%2Dinput%2Dlibinput-,Installer%20Xfce,-Il%20existe%20une) pour 'installation d'une interface graphique.
 
 Suivre la video de demonstration mais sinon apres aavoir installer se connecter en temp que root et faire setup-alpine puis faire les setup d'instalation.
 

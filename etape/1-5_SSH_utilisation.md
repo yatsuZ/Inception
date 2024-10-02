@@ -1,5 +1,7 @@
 # 1.5 Utilisation de SSH
 
+> Optionelle
+
 Étape intermédiaire après [la création de la VM](./1_Creation_de_la_VM.md).<br>
 Ce fichier a pour objectif de documenter l'installation et la configuration de SSH afin de pouvoir manipuler la VM à distance.<br>
 Cela me permet de gérer la VM plus facilement et d'être plus à l'aise dans son administration, plutôt que de travailler directement depuis son interface.
@@ -102,6 +104,6 @@ Mon objectif est de pouvoir me connecter à la VM et afficher un message de bien
 
 **Objectif atteint !**
 
-![ssh_succes](ssh_succes.png)
+![ssh_succes](./../ilustration/ssh_succes.png)
 
 À partir de ce moment-là, on peut se connecter à distance à notre VM, ce qui nous permet d'être plus à l'aise et versatile. À présent, je vais faire mon fichier `.vimrc` et commencer la conteneurisation. Et aussi intaller le paquet git.
