@@ -78,3 +78,4 @@ sleep 0.3
 # Affichage du mot "INCEPTION" avec chaque caractère dans une couleur différente
 afficher_message_colore "$lastword"
 echo ":D"
+echo 
