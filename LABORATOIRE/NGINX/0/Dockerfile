@@ -12,16 +12,25 @@ FROM alpine:3.19
 
 #RUN echo SALUT Je suis dans le contenaire
 
+### INstqllqtion de paquet 
+
 RUN apk update; apk upgrade
 RUN apk add nginx
 RUN apk add vim
 COPY ./config_vim /root/.vimrc 
+COPY ./generateur_certifica.sh /root/generateur_certifica_dans_image.sh
 RUN apk add curl
 
-#RUN nginx -v
+################ pour la generation de clée
 
-################
-
+RUN apk add bash
 RUN mkdir -p /etc/nginx/ssl
 RUN apk add openssl
+
+RUN /root/generateur_certifica_dans_image.sh
+
+################ pour le fichier de configuration nginx
+
+RUN mkdir -p /var/run/nginx
+
 

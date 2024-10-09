@@ -16,7 +16,23 @@ fi
 
 # 'req' permet de créer une demande de signature de certificat (CSR) ou un certificat auto-signé.
 # L'option '-x509' permet de générer un certificat auto-signé au lieu d'une CSR.
-# Nous allons l'utiliser pour générer un certificat auto-signé.
+# L'option '-nodes' permet de ne pas chiffrer la clé privée. Cela signifie qu'aucune phrase de passe
+# ne sera demandée lors de l'utilisation de la clé privée, ce qui est pratique pour les scripts automatisés.
 
-openssl req -x509
+
+# -out spécifie le fichier où sera sauvegardé le certificat généré.
+# -keyout spécifie le fichier où sera enregistrée la clé privée générée.
+# -subj permet de définir toutes les informations du certificat (pays, ville, organisation) sans interaction utilisateur.
+
+# Chemin où sera stocké le certificat
+CERT_PATH="/etc/nginx/ssl/nginx_tls_inception.crt"
+
+# Chemin où sera stockée la clé privée
+KEY_PATH="/etc/nginx/ssl/inginx_tls_inception.key"
+
+# Informations à inclure dans le certificat via le champ -subj
+SUBJECT="/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=yzaoui.42.fr/UID=yzaoui"
+
+# Création du certificat auto-signé avec les chemins spécifiés pour la clé et le certificat
+openssl req -x509 -nodes -out $CERT_PATH -keyout $KEY_PATH -subj "$SUBJECT"
 
