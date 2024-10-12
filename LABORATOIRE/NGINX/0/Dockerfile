@@ -12,7 +12,7 @@ FROM alpine:3.19
 
 #RUN echo SALUT Je suis dans le contenaire
 
-### INstqllqtion de paquet 
+### INstallation de paquet 
 
 RUN apk update; apk upgrade
 RUN apk add nginx
@@ -32,5 +32,23 @@ RUN /root/generateur_certifica_dans_image.sh
 ################ pour le fichier de configuration nginx
 
 RUN mkdir -p /var/run/nginx
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
+RUN mkdir -p /var/www/html
+RUN echo "Bienvenue sur mon serveur NGINX !" > /var/www/html/index.html
+RUN chmod 755 /var/www/html
+RUN adduser -S -G www-data www-data
+RUN chown -R www-data:www-data /var/www/html
 
+RUN mkdir -p /etc/nginx/snippets
+COPY ./fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
+
+EXPOSE 443
+
+# A Faire dans le docker en desacitvant cmd
+# faire nginx -t # pour verifier que tout est bon
+# faire juste nginx pour demarre
+# est utilise curl -k https://localhost pour recupere la page daccueil
+CMD [ "nginx", "-g", "daemon off;" ]
+# Au moment de run faire : 
+# docker run -p 443:443 [is docker ou son nom]

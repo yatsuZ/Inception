@@ -28,7 +28,7 @@ fi
 CERT_PATH="/etc/nginx/ssl/nginx_tls_inception.crt"
 
 # Chemin où sera stockée la clé privée
-KEY_PATH="/etc/nginx/ssl/inginx_tls_inception.key"
+KEY_PATH="/etc/nginx/ssl/nginx_tls_inception.key"
 
 # Informations à inclure dans le certificat via le champ -subj
 SUBJECT="/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=yzaoui.42.fr/UID=yzaoui"
