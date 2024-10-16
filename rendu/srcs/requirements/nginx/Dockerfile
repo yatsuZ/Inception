@@ -1,20 +1,48 @@
-# 1. Utiliser une image de base Alpine
 FROM alpine:3.19
 
-# 2. Installer les dépendances nécessaires (Nginx et OpenSSL -> pour tsl)
-RUN apk add --no-cache nginx openssl
 
-# 3. Copier les fichiers de configuration Nginx
-COPY nginx.conf /etc/nginx/nginx.conf
+### Installation de paquet 
 
-# 4. Copier les certificats SSL (assurez-vous que les certificats sont présents dans le même répertoire que le Dockerfile)
-COPY ssl/ /etc/nginx/ssl/
+RUN apk update; apk upgrade
+RUN apk add nginx
+RUN apk add vim
+RUN apk add curl
+RUN apk add bash
+RUN apk add openssl
 
-# 5. Exposer le port 443 pour HTTPS / et demander dans le sujet en +
+################ Creation de dossier important
+
+RUN mkdir -p /etc/nginx/ssl
+RUN mkdir -p /var/run/nginx
+RUN mkdir -p /var/www/html
+RUN adduser -S -G www-data www-data
+RUN mkdir -p /etc/nginx/snippets
+
+### Donne les droits pour acceder aux serv
+
+RUN chmod 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html
+
+
+### Fichier que je dois copier
+
+COPY ./tools/generateur_certifica.sh /root/generateur_certifica_dans_image.sh
+COPY ./conf/config_vim /root/.vimrc 
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
+
+## Creation de certifica et de la clée
+
+RUN /root/generateur_certifica_dans_image.sh
+
+## Modification du html de base de nginx
+
+#RUN echo "Bienvenue sur mon serveur NGINX !" > /var/www/html/index.html
+
+### Exposition du port 443 pour y aceder en de hors du docker metre
+# les parametre en moment de run -p 443:443
 EXPOSE 443
 
-# 6. Définir le répertoire de travail
-WORKDIR /etc/nginx
+## Execution de nginx avec daemon metre le parametre -d au moment de run
 
-# 7. Démarrer Nginx en arrière-plan
-CMD ["nginx", "-g", "daemon off;"]
+CMD [ "nginx", "-g", "daemon off;" ]
