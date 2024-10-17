@@ -1,147 +1,157 @@
-### Qu'est-ce qu'un **Dockerfile** ?
+# Dockerfile
+
+Ce fichier a pour but d'expliquer les principes de base et utiles du Dockerfile :
+
+1. Définir ce que c'est.
+2. Comment rédiger et connaître les mots-clés.
+3. Comment manipuler et exécuter un Dockerfile.
+4. Sources de documentation.
+
+## Qu'est-ce qu'un **Dockerfile** ?
 
 Un **Dockerfile** est un fichier texte contenant des instructions permettant de créer une **image Docker**. Il définit tout ce dont votre application a besoin pour fonctionner, telles que les dépendances, les fichiers, les variables d'environnement, et les commandes qui doivent être exécutées lorsque l'image est utilisée pour lancer un conteneur.
 
 ### Pourquoi utiliser un Dockerfile ?
 
-- **Automatisation** : Un Dockerfile permet de construire des images de manière reproductible.
-- **Portabilité** : Les images Docker peuvent être utilisées sur n'importe quel système supportant Docker.
-- **Simplicité** : Toutes les dépendances et la configuration sont incluses dans l'image, facilitant l'utilisation d'une application sur n'importe quel système.
+- **Automatisation** : Le Dockerfile permet de construire des images de manière reproductible et automatisée.
+- **Portabilité** : Les images Docker peuvent être utilisées sur n'importe quel système supportant Docker, garantissant ainsi la portabilité de l'application.
+- **Simplicité** : Toutes les dépendances et configurations sont incluses dans l'image, facilitant ainsi le déploiement de l'application sur divers systèmes.
 
 ---
 
+## Mots-clés
 
+1. **FROM**  
+   Le mot-clé **FROM** est le premier à utiliser dans un Dockerfile. Il permet de définir l'image de base sur laquelle le conteneur sera construit, c'est-à-dire le système d'exploitation de départ. Exemple :
+   ```Dockerfile
+   FROM alpine:3.19
+   ```
 
-## Structure d'un Dockerfile
+2. **RUN**  
+   Le mot-clé **RUN** permet d'exécuter une commande dans le conteneur lors de la création de l'image. Exemple :
+   ```Dockerfile
+   RUN apk update
+   ```
 
-1. **Image de base**
-   - L'image de base est le point de départ pour construire votre propre image Docker. Elle peut être une distribution Linux comme **Alpine**, **Ubuntu**, ou d'autres images officielles disponibles sur Docker Hub.
-   - **Syntaxe** : `FROM <image>[:<tag>]`
-   - **Exemple** :
-     ```Dockerfile
-     FROM alpine:latest
-     ```
+3. **COPY**  
+   Le mot-clé **COPY** permet de copier un fichier ou un répertoire depuis l'hôte vers le conteneur. Exemple :
+   ```Dockerfile
+   COPY ./conf/config_vim /root/.vimrc 
+   ```
 
-2. **Installation des dépendances**
-   - Utilisez l'instruction **RUN** pour exécuter des commandes de type shell, comme installer des logiciels ou mettre à jour des paquets.
-   - **Exemple** :
-     ```Dockerfile
-     RUN apk add --no-cache nginx
-     ```
+4. **EXPOSE**  
+   Le mot-clé **EXPOSE** permet d'exposer un port du conteneur vers le système hôte. Attention, vous devez aussi spécifier ce port lors de l'exécution de `docker run`. Exemple :
+   ```Dockerfile
+   EXPOSE 443
+   ```
+   ```bash
+   # Lors de l'exécution avec 'docker run'
+   $> docker run -p 443:443 [ID ou nom de l'image]
+   ```
 
-3. **Copie de fichiers dans l'image**
-   - **COPY** et **ADD** permettent de copier des fichiers de votre machine locale vers l'image.
-   - **Exemple** :
-     ```Dockerfile
-     COPY app /usr/share/nginx/html
-     ```
-
-4. **Définition des variables d'environnement**
-   - **ENV** permet de définir des variables d'environnement à utiliser dans l'image.
-   - **Exemple** :
-     ```Dockerfile
-     ENV APP_ENV=production
-     ```
-
-5. **Définition du répertoire de travail**
-   - **WORKDIR** définit le répertoire dans lequel les commandes suivantes seront exécutées.
-   - **Exemple** :
-     ```Dockerfile
-     WORKDIR /app
-     ```
-
-6. **Exposer un port**
-   - **EXPOSE** permet de déclarer les ports que le conteneur utilisera pour communiquer avec l'extérieur.
-   - **Exemple** :
-     ```Dockerfile
-     EXPOSE 80
-     ```
-
-7. **Commande à exécuter au démarrage**
-   - **CMD** et **ENTRYPOINT** définissent la commande qui sera exécutée lorsque le conteneur démarre.
-     - **CMD** est utilisé pour fournir une commande par défaut.
-     - **ENTRYPOINT** est utilisé pour définir une commande "immuable" qui sera toujours exécutée.
-   - **Exemple** :
-     ```Dockerfile
-     CMD ["nginx", "-g", "daemon off;"]
-     ```
-
-8. **Montage de volumes**
-   - **VOLUME** permet de définir des volumes Docker, des points de montage où les données peuvent être persistées.
-   - **Exemple** :
-     ```Dockerfile
-     VOLUME /data
-     ```
+5. **CMD**  
+   Le mot-clé **CMD** permet de spécifier la commande à exécuter lorsque le conteneur est démarré. Si plusieurs commandes sont spécifiées, la dernière prendra effet. Exemple :
+   ```Dockerfile
+   CMD [ "nginx", "-g", "daemon off;" ]
+   ```
+   Si vous souhaitez exécuter le conteneur en mode détaché (en arrière-plan), vous pouvez utiliser l'option `-d` lors de l'exécution :
+   ```bash
+   # Lors de l'exécution avec 'docker run'
+   $> docker run -d [ID ou nom de l'image]
+   ```
 
 ---
 
-## Exemple complet d'un Dockerfile simple
+## Commandes Docker
 
-```Dockerfile
-# 1. Utiliser une image de base (Alpine dans ce cas)
-FROM alpine:latest
+1. **Dockerfile**  
+   Un **Dockerfile** est un fichier texte qui contient les instructions nécessaires pour construire une image Docker.
 
-# 2. Installer Nginx
-RUN apk add --no-cache nginx
+2. **Image**  
+   Une **image** Docker est une instance immuable qui contient tous les éléments nécessaires à l'exécution d'un conteneur (par exemple, le système d'exploitation, les dépendances, les fichiers d'application).
 
-# 3. Copier le code HTML de l'application dans l'image
-COPY index.html /usr/share/nginx/html
+3. **Conteneur**  
+   Un **conteneur** est une instance en cours d'exécution d'une image Docker. Il fonctionne comme une unité isolée, en exécutant l'application et ses dépendances.
 
-# 4. Exposer le port 80 pour que Nginx soit accessible
-EXPOSE 80
+Donc, en résumé :
 
-# 5. Démarrer Nginx en arrière-plan
-CMD ["nginx", "-g", "daemon off;"]
-```
+- **Dockerfile** = Code source (instructions pour construire l'image).
+- **Image** = Compilation (résultat prêt à l'exécution).
+- **Conteneur** = Exécution (instance fonctionnelle qui utilise l'image).
 
-Dans cet exemple, nous :
-1. Utilisons **Alpine** comme base.
-2. Installons **Nginx** pour servir des fichiers web.
-3. Copions un fichier HTML dans le répertoire de Nginx.
-4. Exposons le port **80** pour permettre la communication.
-5. Utilisons la commande **CMD** pour démarrer Nginx à chaque lancement du conteneur.
 
----
+Pour utiliser les commandes Docker, il faut d'abord appeler le mot-clé `docker`, puis choisir l'une des commandes suivantes :
 
-## Concepts clés du Dockerfile
+### 1. **docker build**  
+   La commande **`docker build`** permet de construire une image à partir d'un Dockerfile. Avec l'option `-t`, on peut nommer l'image générée. Exemple :
+   ```bash
+   # Construire une image à partir du Dockerfile dans le répertoire courant
+   $ docker build .
+   
+   # Construire une image et la nommer "docker_name"
+   $ docker build -t docker_name .
+   
+   # Construire une image et la nommer "docker_name" à partir d'un autre répertoire
+   $ docker build -t docker_name [chemin_du_dossier]
+   ```
 
-- **Images de base** : Le point de départ pour construire votre application (par exemple, Alpine, Ubuntu).
-- **Layers (Couches)** : Chaque instruction du Dockerfile crée une nouvelle couche dans l'image. Les couches sont empilées et mises en cache, ce qui améliore la réutilisation et l'efficacité lors des modifications mineures.
-- **Build context** : Le répertoire local contenant le Dockerfile et les fichiers qui seront utilisés pour créer l'image.
-- **Multistage Builds** : Permet de créer des images Docker plus légères en séparant la phase de compilation de la phase d'exécution.
+### 2. **docker run**  
+   La commande **`docker run`** permet de créer et exécuter un conteneur à partir d'une image. L'option `-d` permet d'exécuter le conteneur en mode détaché (en arrière-plan), et l'option `-p` permet de mapper des ports entre le conteneur et l'hôte. L'option `-it` permet d'interagir avec le conteneur via le terminal (fonctionne uniquement si le conteneur n'est pas en mode détaché). Exemple :
+   ```bash
+   # Lancer un conteneur en mode interactif
+   $ docker run -it [ID ou nom de l'image]
+   
+   # Lancer un conteneur en mode détaché et rediriger les ports
+   $ docker run -d -p 443:443 [ID ou nom de l'image]
+   
+   # Lancer un conteneur en mode détaché et rediriger les ports
+   $ docker run -d -p 443:443 docker_name
+   ```
 
-## Différence entre **`EXPOSE`** et **`PUBLISH`**
+### 3. **docker exec**  
+   La commande **`docker exec`** permet d'exécuter une commande dans un conteneur déjà en cours d'exécution. Elle est similaire à **`docker run`**, mais fonctionne uniquement si le conteneur est déjà en fonctionnement. Exemple :
+   ```bash
+   # Exécuter une commande dans un conteneur en cours d'exécution
+   $ docker exec -it [ID ou nom du conteneur] bash
+   ```
 
-### **EXPOSE**
-- **Usage** : Déclare le port utilisé par le conteneur.
-- **Visibilité** : Il ne rend pas le port accessible depuis l'extérieur du conteneur, mais seulement au sein du réseau Docker.
-- **Syntaxe** dans Dockerfile :
-  ```Dockerfile
-  EXPOSE 80
-  ```
+### 4. **docker ps**  
+   La commande **`docker ps`** permet d'afficher la liste des conteneurs en cours d'exécution. L'option `-q` permet d'afficher uniquement les IDs des conteneurs. Exemple :
+   ```bash
+   # Afficher les conteneurs en cours d'exécution
+   $ docker ps
+   
+   # Afficher uniquement les IDs des conteneurs
+   $ docker ps -q
+   ```
 
-### **PUBLISH** (ou **`-p`** lors de l'exécution)
-- **Usage** : Rend le port accessible depuis l'extérieur du conteneur en mappant un port de l'hôte à celui du conteneur.
-- **Syntaxe** lors de l'exécution du conteneur :
-  ```bash
-  docker run -p 8080:80 my-container
-  ```
+### 5. **docker stop**  
+   La commande **`docker stop`** permet d'arrêter un conteneur en cours d'exécution. Exemple :
+   ```bash
+   # Arrêter un conteneur
+   $ docker stop [ID ou nom du conteneur]
+   ```
 
-  Cela mappe le port 8080 de la machine hôte au port 80 du conteneur.
+### 6. **docker rm**  
+   La commande **`docker rm`** permet de supprimer un conteneur arrêté. Exemple :
+   ```bash
+   # Supprimer un conteneur arrêté
+   $ docker rm [ID ou nom du conteneur]
+   ```
 
-En résumé :
-- **EXPOSE** informe Docker sur les ports utilisés dans le conteneur mais ne les rend pas accessibles.
-- **PUBLISH** lie les ports du conteneur à ceux de l'hôte, les rendant accessibles de l'extérieur.
+### 7. **docker rmi**  
+   La commande **`docker rmi`** permet de supprimer une image Docker. Exemple :
+   ```bash
+   # Supprimer une image
+   $ docker rmi [ID ou nom de l'image]
+   ```
 
----
-
-## Bonnes pratiques pour rédiger un Dockerfile
-
-1. **Utiliser des images légères** : Privilégiez des images de base minimales comme **Alpine** pour réduire la taille des images Docker.
-2. **Minimiser les couches** : Combiner les instructions **RUN** pour réduire le nombre de couches.
-3. **Utiliser les caches efficacement** : Placer les instructions rarement modifiées (comme **RUN apk add**) au début pour maximiser l'utilisation du cache.
-4. **Exécuter des commandes non interactives** : Utiliser des options comme `-y` ou `--no-cache` pour éviter les prompts dans les commandes de type **RUN**.
-5. **Éviter d'inclure des fichiers inutiles** : Utiliser `.dockerignore` pour exclure des fichiers de l'image Docker.
+### 8. **docker images**  
+   La commande **`docker images`** permet d'afficher la liste des images Docker présentes sur votre système. Exemple :
+   ```bash
+   # Afficher la liste des images
+   $ docker images
+   ```
 
 ---
 

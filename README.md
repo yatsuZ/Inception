@@ -10,13 +10,15 @@ L'objectif principal est de créer et gérer une infrastructure de plusieurs ser
 | Tâche | Statut |
 |-------|--------|
 | Rédiger le README | ✔️ |
-| Lire le sujet et rédiger les objectifs | ✔️ |
-| Écrire dans la documentation toutes les notions que je n'ai pas comprises dans mes objectifs | ✔️ |
+| Lire le sujet et rédiger [les objectifs](./objectif.md) | ✔️ |
+| Écrire dans la documentation toutes [les notions](./concepts/) que je n'ai pas compris dans mes objectifs | ✔️ |
 | Rédiger ce que je fais étape par étape | ✔️ |
 | Étape 1 : [Création de la VM](./etape/1_Creation_de_la_VM.md) | ✔️ |
-| Étape 1.5 : [Installer et utiliser ssh](./etape/1-5_SSH_utilisation.md) | ✔️ |
+| Étape 1.1 : [Installer et utiliser ssh](./etape/1-1_SSH_utilisation.md) | ✔️ |
 | Étape 2 : [Installation de Docker](./etape/2_installation_de_docker.md) | ✔️ |
-| Étape 3 : [Configuration de Docker-compose](./etape/3_configuration_de_docker_compose.md) | ❌ |
+| Étape 3 : [Installation des services grace à Docker](./etape/3_installation_des_services.md) | ❌ |
+| Étape 3.1 : [Installation de nginx grace à Docker](./etape/Instalation_des_services/1_Instalation_Nginx.md) | ✔️ |
+| Étape 3.2 : [Installation de MariaDB grace à Docker](./etape/Instalation_des_services/2_Instalation_MariaDB.md) | ✔️ |
 
 ## Structure du projet
 
@@ -24,7 +26,7 @@ L'objectif principal est de créer et gérer une infrastructure de plusieurs ser
 - [`fr.subject.Inception.pdf`](./fr.subject.Inception.pdf) : Sujet détaillé du projet.
 - [`objectif.md`](./objectif.md) : Détails les objectifs du projet.
 - [`concepts/documentation.md`](./concepts/documentation.md) : Documentation détaillée des concepts.
-- `roadmap` : Dossier contenant des fichiers étapes par étapes pour la réalisation du projet.
+- `etape` : Dossier contenant des fichiers étapes par étapes pour la réalisation du projet.
 - `ilustration` : Dossier contenant les illustrations et diagrammes liés au projet.
 - `rendu` : Dossier pour les rendus et résultats finaux.
 

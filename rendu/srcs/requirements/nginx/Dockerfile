@@ -1,6 +1,5 @@
 FROM alpine:3.19
 
-
 ### Installation de paquet 
 
 RUN apk update; apk upgrade
