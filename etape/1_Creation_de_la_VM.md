@@ -61,10 +61,10 @@ VirtualBox est celui utilisé sur les PC de l'école. J'ai déjà travaillé des
 
 ### Choix d'un OS
 
-Cela n'a pas d'importance pour le projet, puisque Docker nous permettra d'utiliser n'importe quel OS pour les services.  
+Cela n'a pas d'importance pour le projet, puisque Docker nous permettra d'utiliser n'importe quel OS pour les services.
 Juste pour le projet, il est recommandé d'installer un OS avec une interface graphique.
 
-> Pour prouver l'utilité des conteneurs, je vais le faire sur 3 OS différents : Alpine, Debian, et Windows.
+> Je choisie Alpine.
 
 ## Comment créer la VM ?
 
