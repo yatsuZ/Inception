@@ -6,7 +6,7 @@ voir [les règles](./../../concepts/regle_du_projet.md).
 
 ## Lecon
 
-1. Rediger un docker file
+1. Rediger un docker file pour installer nginx
 2. Genere un certificat SSL 
 3. Comprendre la configuration de nginx
 4. Connaitre les differente commande de docker

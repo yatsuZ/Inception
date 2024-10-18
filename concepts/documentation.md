@@ -29,6 +29,7 @@ Ce fichier contient toutes les sources utiles à la création du projet.
 	- [WordPress et PHP-FPM](#wordpress-et-php-fpm)
 	- [MariaDB](#mariadb)
 	- [Volume Docker](#volume-docker)
+	- [FastCGI](#fastcgi)
 	- [Hacky Patch](#hacky-patch)
 	- [Daemons](#daemons)
 	- [PID 1](#pid-1)
@@ -154,6 +155,10 @@ L'hyperviseur alloue dynamiquement des ressources matérielles à chaque VM. Cha
 ### Volume Docker
 
 **Volume Docker** : Une méthode pour stocker des données persistantes utilisées et générées par des conteneurs Docker, indépendamment du cycle de vie des conteneurs eux-mêmes.
+
+### FastCGI
+
+**FastCGI** : Un protocole qui permet à NGINX de communiquer avec des applications dynamiques comme PHP de manière plus efficace. Contrairement à CGI classique, FastCGI réutilise les processus existants pour traiter plusieurs requêtes, réduisant ainsi les coûts liés à la création de nouveaux processus à chaque requête et améliorant les performances.
 
 ### Hacky Patch
 

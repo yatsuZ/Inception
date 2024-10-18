@@ -36,7 +36,7 @@ RUN /root/generateur_certifica_dans_image.sh
 
 ## Modification du html de base de nginx
 
-#RUN echo "Bienvenue sur mon serveur NGINX !" > /var/www/html/index.html
+RUN echo "Bienvenue sur mon serveur NGINX !" > /var/www/html/index.html
 
 ### Exposition du port 443 pour y aceder en de hors du docker metre
 # les parametre en moment de run -p 443:443
