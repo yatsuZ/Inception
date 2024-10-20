@@ -6,11 +6,10 @@
 [server]
 
 # this is only for the mysqld standalone daemon
-#cest ici ou y a eu des modif <ICI>
 [mysqld]
 datadir = /var/lib/mysql
-#socket  = /run/mysqld/mysqld.sock
-bind_address=*
+socket = /run/mysqld/mysqld.sock
+bind_address = *
 port = 3306
 user = mysql
 
