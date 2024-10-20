@@ -8,6 +8,6 @@ RUN chown mysql:mysql /run/mysqld
 
 COPY mariaDB.cnf /etc/my.cnf.d/
 COPY init.sh /bin/launch.sh
-COPY bdd.sql /etc/wordpress.sql
+#COPY bdd.sql /etc/wordpress.sql
 
-CMD ["sh", "/bin/launch.sh"]
+#CMD ["sh", "/bin/launch.sh"]

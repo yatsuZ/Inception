@@ -1,7 +1,7 @@
 FROM alpine:3.19
 
-RUN apt update && \
-    apt add --no-cache \
+RUN apk update && \
+    apk add --no-cache \
     mariadb mariadb-client \
     bash \
 	vim \
