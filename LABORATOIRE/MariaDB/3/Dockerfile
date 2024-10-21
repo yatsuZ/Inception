@@ -12,6 +12,7 @@ RUN chown -R mysql:mysql /var/lib/mysql/ /run/mysqld
 
 COPY ./mariadb-server.cnf  /etc/my.cnf.d/
 COPY ./config_vim  /root/.vimrc
-COPY init.sh /bin/launch.sh
+COPY ./creat_data_base.sh /bin/creat_data_base.sh
+COPY ./sql_create_db.sql /bin/sql_create_db.sql
 
 #CMD ["sh", "/bin/launch.sh"]
