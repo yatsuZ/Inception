@@ -5,10 +5,10 @@ if find /var/lib/mysql -mindepth 1 -maxdepth 1 | read; then
 	echo "db exists"
 else
 	echo "need to create db"
-	chown mysql:mysql /var/lib/mysql
 	mysql_install_db -umysql --ldata=/var/lib/mysql
+	mariadbd -umysql &
+	
 #	echo "installed db"
-#	mariadbd -umysql &
 #	pid=$!
 #	sleep 1
 
@@ -16,7 +16,7 @@ else
 #	if [ $? -ne 0 ]; then
 #		exit 1
 #	fi
-
+#
 
 #	echo "created db"
 
@@ -26,8 +26,6 @@ else
 #	" | mysql
 
 #	echo "created db user"
-
-#	< /etc/wordpress.sql mysql
 
 #	echo "populated db"
 
