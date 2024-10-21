@@ -7,31 +7,31 @@ else
 	echo "need to create db"
 	chown mysql:mysql /var/lib/mysql
 	mysql_install_db -umysql --ldata=/var/lib/mysql
-#	echo "installed db"
-#	mariadbd -umysql &
-#	pid=$!
-#	sleep 1
+	echo "installed db"
+	mariadbd -umysql &
+	pid=$!
+	sleep 1
 
-#	echo "CREATE DATABASE wordpress;" | mysql
-#	if [ $? -ne 0 ]; then
-#		exit 1
-#	fi
+	echo "CREATE DATABASE wordpress;" | mysql
+	if [ $? -ne 0 ]; then
+		exit 1
+	fi
 
 
-#	echo "created db"
+	echo "created db"
 
-#	echo "
-#	CREATE User '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
-#	GRANT ALL PRIVILEGES ON wordpress.* TO '$MYSQL_USER'@'%';
-#	" | mysql
+	echo "
+	CREATE User '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+	GRANT ALL PRIVILEGES ON wordpress.* TO '$MYSQL_USER'@'%';
+	" | mysql
 
-#	echo "created db user"
+	echo "created db user"
 
-#	< /etc/wordpress.sql mysql
+	< /etc/wordpress.sql mysql
 
-#	echo "populated db"
+	echo "populated db"
 
-#	kill -9 $pid
+	kill -9 $pid
 fi
 
-#exec mariadbd -umysql
+exec mariadbd -umysql
