@@ -1,7 +1,5 @@
 #!/bin/sh
 
-#!/bin/sh
-
 docker build -t image_test .
 if [ $? -ne 0 ]; then  # Vérifie si la commande a échoué (code de retour différent de 0)
     exit 1
