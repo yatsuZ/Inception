@@ -132,6 +132,16 @@ FLUSH PRIVILEGES;
    ```sh
    mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306 -e "SELECT User, Host FROM mysql.user;"
    ```
+   OU
+   ```sh
+   mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306 -e "SELECT User, Host FROM mysql.user;"
+   ```
+   OU
+   ```sh
+   echo "SELECT User, Host FROM mysql.user;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306
+   ```
 
-Tu peux choisir n'importe laquelle de ces commandes pour interagir avec la base de données.
 
+Tu peux choisir celle qui te convient le mieux.
+
+## FIN
