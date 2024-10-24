@@ -19,14 +19,14 @@ else
 
     echo "Database and user created"
 
-	mysqladmin shutdown -p"${SQL_PASSWORD_USER}"
+	mysqladmin shutdown -p"${SQL_PASSWORD_ROOT}"
 
 fi
 
-#echo "SHOW DATABASES;" | mariadb -u root -p"${SQL_PASSWORD_USER}"
-#echo "SHOW TABLES;" | mariadb -u root -p"${SQL_PASSWORD_USER}" ${SQL_NAME_DATABASE}
-echo "SELECT User, Host FROM mysql.user;" | mariadb -u root -p"${SQL_PASSWORD_USER}"
+#echo "SHOW DATABASES;" | mariadb -u root -p"${SQL_PASSWORD_ROOT}"
+#echo "SHOW TABLES;" | mariadb -u root -p"${SQL_PASSWORD_ROOT}" ${SQL_NAME_DATABASE}
+echo "SELECT User, Host FROM mysql.user;" | mariadb -u root -p"${SQL_PASSWORD_ROOT}"
 
 exec mariadbd -umysql
 
-#echo "SELECT User, Host FROM mysql.user;" | mysql -u root -p"${SQL_PASSWORD_USER}" -h 127.0.0.1 -P 3306
+#echo "SELECT User, Host FROM mysql.user;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -h 127.0.0.1 -P 3306

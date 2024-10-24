@@ -3,6 +3,7 @@ FROM alpine:3.19
 ENV SQL_NAME_DATABASE=nom_de_database_test
 ENV SQL_NAME_USER=nom_utilisateur 
 ENV SQL_PASSWORD_USER=mdp_utilisateur
+ENV SQL_PASSWORD_ROOT=mdp_root
 
 RUN apk update && \
 	apk add --no-cache \
