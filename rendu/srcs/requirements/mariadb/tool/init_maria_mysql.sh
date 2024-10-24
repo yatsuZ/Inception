@@ -7,7 +7,6 @@ else
 	echo "need to create db"
 	mysql_install_db -umysql --ldata=/var/lib/mysql
 	mariadbd -umysql &
- #   pid=$!	
 	sleep 1
 
 	echo "created by using a script sql"
@@ -19,13 +18,15 @@ else
     fi
 
     echo "Database and user created"
-	
-#	kill pid
+
+	mysqladmin shutdown -p"${SQL_PASSWORD_USER}"
 
 fi
 
-echo "SHOW DATABASES;" | mariadb -u root -p"${SQL_PASSWORD_USER}"
-echo "SHOW TABLES;" | mariadb -u root -p"${SQL_PASSWORD_USER}" ${SQL_NAME_DATABASE}
+#echo "SHOW DATABASES;" | mariadb -u root -p"${SQL_PASSWORD_USER}"
+#echo "SHOW TABLES;" | mariadb -u root -p"${SQL_PASSWORD_USER}" ${SQL_NAME_DATABASE}
 echo "SELECT User, Host FROM mysql.user;" | mariadb -u root -p"${SQL_PASSWORD_USER}"
 
 exec mariadbd -umysql
+
+#echo "SELECT User, Host FROM mysql.user;" | mysql -u root -p"${SQL_PASSWORD_USER}" -h 127.0.0.1 -P 3306
