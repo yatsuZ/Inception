@@ -19,6 +19,7 @@ L'objectif principal est de créer et gérer une infrastructure de plusieurs ser
 | Étape 3 : [Installation des services grace à Docker](./etape/3_installation_des_services.md) | ❌ |
 | Étape 3.1 : [Installation de nginx grace à Docker](./etape/Instalation_des_services/1_Instalation_Nginx.md) | ✔️ |
 | Étape 3.2 : [Installation de MariaDB grace à Docker](./etape/Instalation_des_services/2_Instalation_MariaDB.md) | ✔️ |
+| Étape 3.3 : [Installation de WordPress grace à Docker](./etape/Instalation_des_services/3_Instalation_WordPress.md) | ✔️ |
 
 ## Structure du projet
 

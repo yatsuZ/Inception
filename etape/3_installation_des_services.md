@@ -43,16 +43,20 @@ Voici une explication des différents fichiers/dossiers :
 			└── [...]
 ```
 
-## 2. [Comence a installer le service NGINX](./Instalation_des_services/1_Instalation_Nginx.md)
-
+### 1. [Comence a installer le service NGINX](./Instalation_des_services/1_Instalation_Nginx.md)
 
 dans le dossier [nginx](./../rendu/srcs/requirements/nginx/) rediger le docker file et toute infomation utile.
 
 Objectif : **[Mettre en place un conteneur contenant NGINX avec TLSv1.2 qui fera office de serveur web.](./Instalation_des_services/1_Instalation_Nginx.md)**
 
-## 2. [Comence a installer le service MariaDB](./Instalation_des_services/2_Instalation_MariaDB.md)
-
+### 2. [Comence a installer le service MariaDB](./Instalation_des_services/2_Instalation_MariaDB.md)
 
 dans le dossier [mariadb](./../rendu/srcs/requirements/mariadb/) rediger le docker file et toute infomation utile.
 
 Objectif : **[Mettre en place un conteneur contenant MariaDb qui fera office de gestion de base de donnée](./Instalation_des_services/2_Instalation_MariaDB.md)**
+
+### 3 .[Comence a installer le service WordPress](./Instalation_des_services/3_Instalation_WordPress.md)
+
+dans le dossier [wordpress](./../rendu/srcs/requirements/wordpress/) rediger le docker file et toute infomation utile.
+
+Objectif : **[Mettre en place un conteneur contenant WordPress qui fera office de gestion de page web](./Instalation_des_services/3_Instalation_WordPress.md)**
