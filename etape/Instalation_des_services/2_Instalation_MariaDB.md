@@ -147,7 +147,22 @@ FLUSH PRIVILEGES;
    echo "SELECT User, Host FROM mysql.user;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306
    ```
 
-
 Tu peux choisir celle qui te convient le mieux.
 
+### Connexion distante
+
+Pour permettre une connexion distante, il faudra installer `mariadb-client` sur le PC hôte et exposer le port 3306 à la fois dans le `docker run` et dans le conteneur. Ensuite, une fois connecté au conteneur, exécute la commande suivante pour accorder les privilèges de connexion à distance :
+
+```sh
+echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'mdp_root'; FLUSH PRIVILEGES;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306
+```
+
+Une fois cela fait, tu peux sortir du conteneur et te connecter à la base de données depuis le PC hôte :
+
+```sh
+mysql -h 127.0.0.1 -P 3306 -u root -p"${SQL_PASSWORD_ROOT}"
+```
+
+
 ## FIN
+
