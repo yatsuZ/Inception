@@ -36,9 +36,12 @@ Pour une définition, consulte le [site officiel](https://mariadb.com/kb/fr/what
 
 ### Dockerfile
 
+
+
 ```Dockerfile
 FROM alpine:3.19
 
+# a modifier
 ENV SQL_NAME_DATABASE=nom_de_database_test
 ENV SQL_NAME_USER=nom_utilisateur 
 ENV SQL_PASSWORD_USER=mdp_utilisateur
@@ -53,6 +56,9 @@ COPY ./config/mariadb-server.cnf /etc/my.cnf.d/
 COPY ./config/config_vim /root/.vimrc
 COPY ./tool/init_maria_mysql.sh /bin/init_maria_mysql.sh
 COPY ./tool/init_db.sql /bin/init_db.sql
+
+# a modifier ptetre
+EXPOSE 3306
 
 CMD ["sh", "/bin/init_maria_mysql.sh"]
 ```
