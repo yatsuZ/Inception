@@ -73,7 +73,7 @@ CMD ["sh", "/bin/init_maria_mysql.sh"]
 [mysqld]
 datadir = /var/lib/mysql
 socket = /run/mysqld/mysqld.sock
-bind_address = *
+bind-address = 0.0.0.0
 port = 3306
 user = mysql
 ```
