@@ -21,6 +21,6 @@ COPY ./config/config_vim  /root/.vimrc
 COPY ./tool/init_maria_mysql.sh /bin/init_maria_mysql.sh
 COPY ./tool/init_db.sql /bin/init_db.sql
 
-EXPOSE 3306
+#EXPOSE 3306
 
 CMD ["sh", "/bin/init_maria_mysql.sh"]
