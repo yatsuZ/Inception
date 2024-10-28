@@ -6,6 +6,10 @@ sleep 10
 # Chemin vers le répertoire WordPress
 WP_PATH="/var/www/html"
 
+MYSQL_DATABASE="data_name"
+MYSQL_USER="user_data"
+MYSQL_PASSWORD="mdp"
+
 # Vérifier si le fichier wp-config.php existe déjà pour déterminer si WordPress est installé
 if [ ! -f "$WP_PATH/wp-config.php" ]; then
     echo "Installation de WordPress..."
