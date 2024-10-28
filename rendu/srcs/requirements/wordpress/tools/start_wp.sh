@@ -37,8 +37,8 @@ fi
 # fi
 
 # Installation et activation des plugins, si nécessaire
-wp plugin install wp-redis --activate --path="$WP_PATH"
-wp redis enable --path="$WP_PATH"
+#wp plugin install wp-redis --activate --path="$WP_PATH"
+#wp redis enable --path="$WP_PATH"
 
 # Démarrer PHP-FPM
 exec php-fpm82 -F
