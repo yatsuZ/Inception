@@ -60,6 +60,14 @@ Un **Dockerfile** est un fichier texte contenant des instructions permettant de 
    $> docker run -d [ID ou nom de l'image]
    ```
 
+6. **ENTRYPOINT**
+
+   Définit la commande principale qui sera toujours exécutée lorsque le conteneur démarre.
+   Exemple :
+   ```Dockerfile
+   ENTRYPOINT ["nginx"]
+   ```
+
 ---
 
 ## Commandes Docker
