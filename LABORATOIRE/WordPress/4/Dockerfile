@@ -27,7 +27,7 @@ RUN apk update && \
     php-xml
 
 # Configuration de PHP-FPM
-COPY ./php82_php-fpm_d_www.conf /etc/php82/php-fpm.d/
+COPY ./php82_php-fpm_d_www.conf /etc/php82/php-fpm.d/www.conf
 
 # Installer WP-CLI
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
