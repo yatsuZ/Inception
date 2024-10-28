@@ -1,30 +1,27 @@
 # 1. Installation de Nginx
 
-Objectif : Mettre en place un conteneur contenant NGINX avec TLSv1.2
+> ! Encore à modifier pour la version définitive
 
-voir [les règles](./../../concepts/regle_du_projet.md).
+**Objectif** : Mettre en place un conteneur contenant NGINX avec TLSv1.2.
 
-## Lecon
+Voir [les règles](./../../concepts/regle_du_projet.md).
 
-1. Rediger un docker file pour installer nginx
-2. Genere un certificat SSL 
-3. Comprendre la configuration de nginx
-4. Connaitre les differente commande de docker
+## Leçon
 
-## C'est quoi
+1. Rédiger un Dockerfile pour installer Nginx.
+2. Générer un certificat SSL.
+3. Comprendre la configuration de Nginx.
+4. Connaître les différentes commandes de Docker.
 
-qu'es que c'est que [NGINX](./../../concepts/documentation.md#nginx-et-tls) et [TLSv](./../../concepts/documentation.md#nginx-et-tls) ?
+## C'est quoi ?
 
-## Comment faire ?
+Qu'est-ce que [NGINX](./../../concepts/documentation.md#nginx-et-tls) et [TLSv](./../../concepts/documentation.md#nginx-et-tls) ?
 
+### L'arborescence
 
+Dans un premier temps, j'ai testé dans un laboratoire les bases du Dockerfile et j'ai développé au fur et à mesure. Je vais donc expliquer les résultats et avancer progressivement.
 
-### L'arobraissance
-
-Dans un premiere temp j'ai teste dans laboratoire les base de Dockerfile et j'ai developper au fur et a mesure.
-Donc je vais expliquer le resultat et expliquer au fur et a mesure.
-
-Voci l'arboraissance rendu de nginx :
+Voici l'arborescence obtenue de Nginx :
 
 ```zsh
 ➜  nginx git:(main) ✗ tree
@@ -40,33 +37,33 @@ Voci l'arboraissance rendu de nginx :
 2 directories, 5 files
 ```
 
-- Le fichier Dockerfile et ce qui permet de dire comment build une image puis run le conteneur
-- Le dossier conf contien tout type de fichier de configuration que je vais copier ensuite dans mon docker
-- Le dossier tools contient tout outil utls en locurence la il sagit de script
+- Le fichier `Dockerfile` permet de spécifier comment construire une image puis exécuter le conteneur.
+- Le dossier `conf` contient tous les fichiers de configuration que je vais copier ensuite dans mon conteneur.
+- Le dossier `tools` contient tous les outils utiles, en l'occurrence, ici il s'agit d'un script.
 
-### Le contenue du Docker file
+### Le contenu du Dockerfile
 
-voir [Docker info si vous ne comprenz pas certain mot clée](./../../concepts/Dockerfile_info.md).
+Voir [Docker info si vous ne comprenez pas certains mots-clés](./../../concepts/Dockerfile_info.md).
 
 ```Dockerfile
-# specifie l'image
+# Spécifie l'image
 FROM alpine:3.19
 
-# Installation de service mais avant mise a jour des paquets
+# Installation de services, mais avant mise à jour des paquets
 RUN apk update; apk upgrade
 
-# le serveur web.
+# Installation du serveur web
 RUN apk add nginx
-# un éditeur de texte.
+# Installation d'un éditeur de texte
 RUN apk add vim
-# un outil pour transférer des données.
+# Installation d'un outil pour transférer des données
 RUN apk add curl
-# un interpréteur de commandes.
+# Installation d'un interpréteur de commandes
 RUN apk add bash
-# pour gérer les certificats SSL.
+# Installation pour gérer les certificats SSL
 RUN apk add openssl
 
-# Creation de dossier et droit de groupe
+# Création de dossiers et droits de groupe
 RUN mkdir -p /etc/nginx/ssl
 RUN mkdir -p /var/run/nginx
 RUN mkdir -p /var/www/html
@@ -76,13 +73,13 @@ RUN mkdir -p /etc/nginx/snippets
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-# Copie de fichier de configuration + script sh
+# Copie de fichiers de configuration et du script
 COPY ./tools/generateur_certifica.sh /root/generateur_certifica_dans_image.sh
 COPY ./conf/config_vim /root/.vimrc 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
-# Genere une clée et un certifica tls
+# Génération d'une clé et d'un certificat TLS
 RUN /root/generateur_certifica_dans_image.sh
 
 EXPOSE 443
@@ -90,19 +87,18 @@ EXPOSE 443
 CMD [ "nginx", "-g", "daemon off;" ]
 ```
 
-EXPLICATION :
+### Explication :
 
-1. RUN mkdir -p ... et RUN adduser ...
-   - Ces commandes créent les répertoires nécessaires à Nginx et ajoutent un utilisateur www-data (utilisé généralement par les services web).
-   - chmod 755 /var/www/html : donne les permissions appropriées au répertoire /var/www/html.
-   - chown -R www-data:www-data /var/www/html : attribue la propriété du répertoire à l'utilisateur www-data.
+1. **RUN mkdir -p ... et RUN adduser ...**
+   - Ces commandes créent les répertoires nécessaires à Nginx et ajoutent un utilisateur `www-data` (utilisé généralement par les services web).
+   - `chmod 755 /var/www/html` : donne les permissions appropriées au répertoire `/var/www/html`.
+   - `chown -R www-data:www-data /var/www/html` : attribue la propriété du répertoire à l'utilisateur `www-data`.
 
-2. EXPOSE 443
+2. **EXPOSE 443**
    - Cette instruction expose le port 443, utilisé pour les connexions HTTPS, afin que l'image Docker sache qu'elle écoute ce port.
 
-3. CMD ["nginx", "-g", "daemon off;"]
+3. **CMD ["nginx", "-g", "daemon off;"]**
    - La commande CMD définit l'action par défaut à exécuter lorsque le conteneur démarre. Ici, il s'agit de démarrer Nginx en mode "non-daemon", c'est-à-dire sans passer en arrière-plan, ce qui est nécessaire dans un conteneur Docker.
-
 
 ---
 
@@ -114,7 +110,7 @@ Ce fichier est optionnel. Il permet de configurer directement l'éditeur Vim à 
 
 ### `fastcgi-php.conf`
 
-> A suprimer car sa sera le contenair wordpress qui devra son occupée
+> À supprimer car ce sera le conteneur WordPress qui s'en occupera.
 
 Le fichier `fastcgi-php.conf` configure Nginx pour le traitement des requêtes PHP via FastCGI. Voici son contenu :
 
@@ -212,154 +208,43 @@ http {
 
    - **`location ~ \.php$ { ... }`**
      - Cette section gère les fichiers PHP. Elle inclut le fichier de configuration `fastcgi-php.conf` pour traiter les requêtes PHP via FastCGI.
-     - La ligne **`# fastcgi_pass wordpress:9000;`** est commentée, mais elle pourrait être utilisée pour rediriger les requêtes PHP vers un service PHP (par exemple, un conteneur Docker exécutant PHP-FPM).
+     - La ligne **`# fastcgi_pass wordpress
 
-Voici une version révisée de l'explication pour le script de génération de clé et de certificat, avec quelques clarifications.
+:9000;`** est commentée pour l'instant, car elle sera configurée ultérieurement lors de la mise en place de WordPress.
 
----
+### 2. Script pour générer les certificats
 
-## Générateur de clé et de certificat
+Le script `generateur_certifica.sh` permet de générer un certificat SSL auto-signé et une clé associée. Voici le contenu du script :
 
-### `generateur_certifica.sh`
+```bash
+#!/bin/sh
 
-Le script suivant est utilisé pour générer un certificat SSL/TLS et une clé privée en utilisant `openssl`. Cela peut être nécessaire pour sécuriser un serveur web, comme dans le cas de Nginx, qui nécessite des certificats SSL pour activer HTTPS.
+# Génération d'une clé privée
+openssl genrsa -out /etc/nginx/ssl/nginx_tls_inception.key 2048
 
-```sh
-#!/bin/bash
-
-ROUGE="\e[31m"
-NOCOLOR="\e[0m"
-
-if ! command -v openssl &> /dev/null
-then
-    echo -e $ROUGE "Erreur : 'openssl' n'est pas installé. Veuillez l'installer pour continuer." $NOCOLOR
-    exit 1
-fi
-
-CERT_PATH="/etc/nginx/ssl/nginx_tls_inception.crt"
-KEY_PATH="/etc/nginx/ssl/nginx_tls_inception.key"
-SUBJECT="/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=yzaoui.42.fr/UID=yzaoui"
-
-openssl req -x509 -nodes -out $CERT_PATH -keyout $KEY_PATH -subj "$SUBJECT"
+# Génération d'un certificat auto-signé
+openssl req -new -x509 -key /etc/nginx/ssl/nginx_tls_inception.key -out /etc/nginx/ssl/nginx_tls_inception.crt -days 365 -subj "/C=FR/ST=France/L=Paris/O=Inception/OU=IT Department/CN=localhost"
 ```
 
-### Explication des commandes
+- **`openssl genrsa ...`** : génère une clé RSA de 2048 bits.
+- **`openssl req -new -x509 ...`** : génère un certificat SSL auto-signé valable 365 jours, avec des informations spécifiées dans le champ `-subj`.
 
-1. **Définition des couleurs** :
-   - `ROUGE="\e[31m"` et `NOCOLOR="\e[0m"` : Ces variables permettent de colorer le texte de sortie en rouge pour les messages d'erreur. Cela rend les erreurs plus visibles dans le terminal.
+### 3. Construction de l'image Docker
 
-2. **Vérification de la commande `openssl`** :
-   ```sh
-   if ! command -v openssl &> /dev/null
-   then
-       echo -e $ROUGE "Erreur : 'openssl' n'est pas installé. Veuillez l'installer pour continuer." $NOCOLOR
-       exit 1
-   fi
-   ```
-   - Ce bloc vérifie si la commande `openssl` est disponible sur le système. Si `openssl` n'est pas installé, un message d'erreur est affiché et le script se termine (`exit 1`).
+Pour construire l'image Docker à partir du `Dockerfile`, utilisez la commande suivante :
 
-3. **Définition des chemins du certificat et de la clé** :
-   ```sh
-   CERT_PATH="/etc/nginx/ssl/nginx_tls_inception.crt"
-   KEY_PATH="/etc/nginx/ssl/nginx_tls_inception.key"
-   ```
-   - Ces variables définissent l'emplacement des fichiers de certificat (`.crt`) et de clé privée (`.key`). Ces fichiers seront utilisés par Nginx pour la connexion sécurisée HTTPS.
+```bash
+docker build -t nginx-ssl .
+```
 
-4. **Définition du sujet (Subject)** :
-   ```sh
-   SUBJECT="/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=yzaoui.42.fr/UID=yzaoui"
-   ```
-   - Le **sujet** définit les informations sur l'entité qui possède le certificat :
-     - `/C=FR` : Pays (France)
-     - `/ST=IDF` : État (Île-de-France)
-     - `/L=Paris` : Localité (Paris)
-     - `/O=42` : Organisation (42, par exemple une école ou une entreprise)
-     - `/OU=42` : Unité organisationnelle
-     - `/CN=yzaoui.42.fr` : Nom commun (nom de domaine ou nom d'utilisateur associé au certificat)
-     - `/UID=yzaoui` : ID utilisateur (identifiant unique)
+### 4. Lancement du conteneur
 
-5. **Commande `openssl req -x509 -nodes`** :
-   ```sh
-   openssl req -x509 -nodes -out $CERT_PATH -keyout $KEY_PATH -subj "$SUBJECT"
-   ```
-   - **`openssl req`** : Utilise la commande `req` pour créer une demande de certificat.
-   - **`-x509`** : Cette option génère un certificat auto-signé au lieu de créer une demande de signature de certificat (CSR). Cela est utile pour les tests internes ou les environnements de développement.
-   - **`-nodes`** : Indique de ne pas chiffrer la clé privée. Cela permet à Nginx de l'utiliser directement sans nécessiter de mot de passe.
-   - **`-out $CERT_PATH`** : Spécifie l'emplacement du certificat généré (`$CERT_PATH`).
-   - **`-keyout $KEY_PATH`** : Spécifie l'emplacement de la clé privée générée (`$KEY_PATH`).
-   - **`-subj "$SUBJECT"`** : Utilise le sujet précédemment défini pour remplir les informations du certificat.
+Pour lancer le conteneur à partir de l'image nouvellement construite, utilisez la commande suivante :
 
-### Tester le conteneur
+```bash
+docker run -d -p 443:443 --name nginx-ssl nginx-ssl
+```
 
-1. **Construire l'image Docker** :
-   Utilisez la commande suivante pour construire l'image Docker à partir du `Dockerfile` :
+### 5. Vérification de l'installation
 
-   ```bash
-   docker build -t docker_name .
-   ```
-
-   - **Vérification** : Pour vérifier si l'image a bien été créée, utilisez la commande suivante :
-
-   ```bash
-   docker images
-   ```
-
-   Cela vous permettra de lister toutes les images Docker présentes sur votre machine.
-
-2. **Exécuter le conteneur** :
-   Pour créer et exécuter le conteneur à partir de l'image construite, utilisez cette commande :
-
-   ```bash
-   docker run -d -p 443:443 docker_name
-   ```
-
-   - **Options** :
-     - `-d` : Exécute le conteneur en mode détaché (en arrière-plan).
-     - `-p 443:443` : Mappe le port 443 du conteneur vers le port 443 de votre machine hôte (port HTTPS).
-
-   **Manipuler le conteneur** : Pour accéder au conteneur et exécuter des commandes à l'intérieur, utilisez la commande suivante :
-
-   ```bash
-   docker exec -it [ID du conteneur] sh
-   ```
-
-   Cela vous donnera un shell interactif dans le conteneur.
-
-3. **Tester la connexion HTTPS** :
-   Vous pouvez tester la connexion HTTPS à votre conteneur avec la commande `curl` ou via votre navigateur web.
-
-   - **Via `curl`** :
-
-   ```bash
-   curl -k https://localhost
-   ```
-
-   - L'option `-k` est utilisée pour ignorer les erreurs liées à l'auto-signature du certificat SSL (généralement utilisé pour les certificats non vérifiés).
-
-   - **Via le navigateur** : Accédez à `https://localhost` et vous devriez voir la page web servie par Nginx, même si le certificat SSL est auto-signé.
-
-4. **Arrêter et supprimer le conteneur** :
-   - **Arrêter le conteneur** : Si vous souhaitez arrêter le conteneur en cours d'exécution, utilisez la commande suivante en remplaçant `[ID du conteneur]` par l'ID du conteneur :
-
-   ```bash
-   docker stop [ID du conteneur]
-   ```
-
-   - **Supprimer le conteneur** : Une fois le conteneur arrêté, vous pouvez le supprimer avec cette commande :
-
-   ```bash
-   docker rm [ID du conteneur]
-   ```
-
-5. **Supprimer l'image** :
-   Pour supprimer l'image Docker, utilisez la commande suivante en remplaçant `[docker_name]` par le nom de votre image :
-
-   ```bash
-   docker rmi docker_name
-   ```
-
-   Cela supprimera l'image de votre machine.
-
-## FIN
-
-passer ensuite a la creation de du dockerfile de maridb.
+Pour vérifier que Nginx fonctionne correctement avec HTTPS, ouvrez votre navigateur et accédez à `https://localhost`. Vous devriez voir la page par défaut de Nginx, mais comme c'est un certificat auto-signé, votre navigateur vous avertira que la connexion n'est pas sécurisée.

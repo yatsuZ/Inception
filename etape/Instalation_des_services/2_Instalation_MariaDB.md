@@ -1,7 +1,9 @@
 # 2. Installation de MariaDB
 
+> ! À modifier : pas la version définitive
+
 **Objectif :** Créer un conteneur MariaDB.  
-Voir [les règles](./../../concepts/regle_du_projet.md).
+Consulte [les règles](./../../concepts/regle_du_projet.md).
 
 ## Leçon
 
@@ -11,7 +13,7 @@ Voir [les règles](./../../concepts/regle_du_projet.md).
 
 ## MariaDB
 
-Pour une définition, consulte le [site officiel](https://mariadb.com/kb/fr/what-is-mariadb/) ou la [documentation officielle](https://mariadb.com/kb/en/documentation/).
+Pour plus d'informations, consulte le [site officiel](https://mariadb.com/kb/fr/what-is-mariadb/) ou la [documentation officielle](https://mariadb.com/kb/en/documentation/).
 
 ## Comment faire ?
 
@@ -22,7 +24,7 @@ Pour une définition, consulte le [site officiel](https://mariadb.com/kb/fr/what
 
 ### Arborescence
 
-```zsh
+```bash
 ➜  mariadb git:(main) ✗ tree
 .
 ├── config
@@ -36,12 +38,10 @@ Pour une définition, consulte le [site officiel](https://mariadb.com/kb/fr/what
 
 ### Dockerfile
 
-
-
 ```Dockerfile
 FROM alpine:3.19
 
-# a modifier
+# À modifier
 ENV SQL_NAME_DATABASE=nom_de_database_test
 ENV SQL_NAME_USER=nom_utilisateur 
 ENV SQL_PASSWORD_USER=mdp_utilisateur
@@ -57,7 +57,7 @@ COPY ./config/config_vim /root/.vimrc
 COPY ./tool/init_maria_mysql.sh /bin/init_maria_mysql.sh
 COPY ./tool/init_db.sql /bin/init_db.sql
 
-# a modifier ptetre
+# À modifier peut-être
 EXPOSE 3306
 
 CMD ["sh", "/bin/init_maria_mysql.sh"]
@@ -66,6 +66,11 @@ CMD ["sh", "/bin/init_maria_mysql.sh"]
 ---
 
 ## Fichiers de configuration
+
+### `config_vim`
+
+Ce fichier est optionnel. Il permet de configurer directement l'éditeur Vim à l'intérieur du conteneur. Si vous avez des préférences spécifiques pour l'édition de texte, ce fichier les appliquera automatiquement lors de l'utilisation de Vim.
+
 
 ### `mariadb-server.cnf`
 
@@ -78,11 +83,13 @@ port = 3306
 user = mysql
 ```
 
-- **datadir** : Dossier où sont stockées les bases de données.
-- **socket** : Fichier pour les connexions locales.
-- **bind_address** : Permet les connexions réseau.
-- **port** : Définit le port utilisé (3306 par défaut).
-- **user** : Utilisateur exécutant MariaDB.
+- **`datadir`** : Dossier où sont stockées les bases de données.
+- **`socket`** : Fichier pour les connexions locales.
+- **`bind_address`** : Permet les connexions réseau.
+- **`port`** : Définit le port utilisé (3306 par défaut).
+- **`user`** : Utilisateur exécutant MariaDB.
+
+### Script pour demarer et ini la bdd
 
 ### `init_maria_mysql.sh`
 
@@ -90,16 +97,16 @@ user = mysql
 #!/usr/bin/env sh
 
 if find /var/lib/mysql -mindepth 1 | read; then
-    echo "db exists"
+    echo "La base de données existe déjà."
 else
-    echo "need to create db"
+    echo "Création de la base de données..."
     mysql_install_db --user=mysql --ldata=/var/lib/mysql
     mariadbd --user=mysql &
     sleep 1
 
-    echo "created by using a script sql"
+    echo "Création via un script SQL..."
     envsubst < /bin/init_db.sql | mysql -u root
-    [ $? -ne 0 ] && echo "Error during database creation" && exit 1
+    [ $? -ne 0 ] && echo "Erreur lors de la création de la base de données" && exit 1
 
     mysqladmin shutdown -p"${SQL_PASSWORD_ROOT}"
 fi
@@ -140,21 +147,15 @@ FLUSH PRIVILEGES;
    ```
    OU
    ```sh
-   mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306 -e "SELECT User, Host FROM mysql.user;"
-   ```
-   OU
-   ```sh
    echo "SELECT User, Host FROM mysql.user;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306
    ```
-
-Tu peux choisir celle qui te convient le mieux.
 
 ### Connexion distante
 
 Pour permettre une connexion distante, il faudra installer `mariadb-client` sur le PC hôte et exposer le port 3306 à la fois dans le `docker run` et dans le conteneur. Ensuite, une fois connecté au conteneur, exécute la commande suivante pour accorder les privilèges de connexion à distance :
 
 ```sh
-echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'mdp_root'; FLUSH PRIVILEGES;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306
+echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${SQL_PASSWORD_ROOT}'; FLUSH PRIVILEGES;" | mysql -u root -p"${SQL_PASSWORD_ROOT}" -P 3306
 ```
 
 Une fois cela fait, tu peux sortir du conteneur et te connecter à la base de données depuis le PC hôte :
@@ -163,6 +164,4 @@ Une fois cela fait, tu peux sortir du conteneur et te connecter à la base de do
 mysql -h 127.0.0.1 -P 3306 -u root -p"${SQL_PASSWORD_ROOT}"
 ```
 
-
 ## FIN
-
