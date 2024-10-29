@@ -1,6 +1,10 @@
 #!/usr/bin/env sh
 
 sleep 5
+# until mysqladmin ping -h mariadb --silent; do
+#     echo "Waiting for MariaDB to be ready..."
+#     sleep 2
+# done
 
 WP_PATH="/var/www/wordpress"
 
