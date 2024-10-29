@@ -43,6 +43,11 @@ Voici une explication des différents fichiers/dossiers :
 			└── [...]
 ```
 
+## Instalation des Docker
+
+C'est quoi ? [Information conerncernant un Docker](./../concepts/Dockerfile_info.md)
+
+
 ### 1. [Comence a installer le service NGINX](./Instalation_des_services/1_Instalation_Nginx.md)
 
 dans le dossier [nginx](./../rendu/srcs/requirements/nginx/) rediger le docker file et toute infomation utile.
@@ -60,3 +65,16 @@ Objectif : **[Mettre en place un conteneur contenant MariaDb qui fera office de 
 dans le dossier [wordpress](./../rendu/srcs/requirements/wordpress/) rediger le docker file et toute infomation utile.
 
 Objectif : **[Mettre en place un conteneur contenant WordPress qui fera office de gestion de page web](./Instalation_des_services/3_Instalation_WordPress.md)**
+
+## Redaction du Docker-Compose
+
+De quoi sagit-il ? voir [documentation](./../concepts/docker_vs_docker_compose.md)
+
+Que fautil rediger et a quoi sa sere 
+en resumer :  Sa sert à [a remplire] et ce qui faudra ecrire dededans sera [a remplis]
+
+Voici le contenue du [`cocker-compose.yml`](./../rendu/srcs/docker-compose.yml) :
+```yml
+```
+
+### Explication
