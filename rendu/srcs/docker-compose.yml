@@ -1,4 +1,4 @@
-version: "3.9"
+#version: "3.9"
 
 services:
   nginx:
@@ -6,6 +6,7 @@ services:
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
+    image: nginx-img
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -22,6 +23,7 @@ services:
     build: 
       context: requirements/mariadb
       dockerfile: Dockerfile
+    image: mariadb-img
     networks:
       - inception
     env_file: .env
@@ -36,6 +38,7 @@ services:
     build: 
       context: requirements/wordpress
       dockerfile: Dockerfile
+    image: wordpress-img
     volumes:
       - wordpress:/var/www/wordpress
     networks:
