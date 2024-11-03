@@ -23,6 +23,12 @@ if [ ! -f "$WP_PATH/wp-load.php" ]; then
     tar -xzf /tmp/latest.tar.gz -C /tmp
     mv /tmp/wordpress/* "$WP_PATH"
     rm -rf /tmp/latest.tar.gz /tmp/wordpress
+
+    # Donner les droits nécessaires au serveur web
+    chown -R www-data:www-data "$WP_PATH"        # Remplace 'www-data' par l'utilisateur de ton serveur web si nécessaire
+    find "$WP_PATH" -type d -exec chmod 755 {} \;
+    find "$WP_PATH" -type f -exec chmod 644 {} \;
+
 else
     echo "WordPress est déjà installé."
 fi
