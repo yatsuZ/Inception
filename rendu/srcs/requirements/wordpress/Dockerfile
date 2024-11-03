@@ -32,8 +32,5 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 COPY ./tools/start_wp.sh /usr/local/bin/start_wp.sh
 RUN chmod +x /usr/local/bin/start_wp.sh
 
-RUN echo "define( 'CONCATENATE_SCRIPTS', false );
-define( 'SCRIPT_DEBUG', true );" >>  /var/www/wordpress/wp-config-sample.php
-
 ENTRYPOINT ["/usr/local/bin/start_wp.sh"]
 CMD [] 
