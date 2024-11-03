@@ -28,7 +28,7 @@ RUN chown -R www-data:www-data /var/www/html
 COPY ./tools/generateur_certifica.sh /root/generateur_certifica_dans_image.sh
 COPY ./conf/config_vim /root/.vimrc 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-#COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
+COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
 ## Creation de certifica et de la clée
 
