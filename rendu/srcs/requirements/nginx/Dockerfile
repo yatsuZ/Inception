@@ -1,6 +1,5 @@
 FROM alpine:3.19
 
-### Installation de paquet 
 
 RUN apk update; apk upgrade
 RUN apk add nginx
@@ -9,21 +8,14 @@ RUN apk add curl
 RUN apk add bash
 RUN apk add openssl
 
-################ Creation de dossier important
-
 RUN mkdir -p /etc/nginx/ssl
 RUN mkdir -p /var/run/nginx
 RUN mkdir -p /var/www/html
 RUN adduser -S -G www-data www-data
 RUN mkdir -p /etc/nginx/snippets
 
-### Donne les droits pour acceder aux serv
-
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
-
-
-### Fichier que je dois copier
 
 COPY ./tools/generateur_certifica.sh /root/generateur_certifica_dans_image.sh
 COPY ./conf/config_vim /root/.vimrc 
