@@ -10,7 +10,7 @@ else
 	sleep 1
 
 	echo "created by using a script sql"
-    # Exécuter le script SQL avec des variables d'environnement
+	# Exécuter le script SQL avec des variables d'environnement
     envsubst < /bin/init_db.sql | mysql -u root
     if [ $? -ne 0 ]; then
         echo "Error during database creation"
