@@ -9,11 +9,4 @@ then
     exit 1
 fi
 
-CERT_PATH="/etc/nginx/ssl/nginx_tls_inception.crt"
-
-KEY_PATH="/etc/nginx/ssl/nginx_tls_inception.key"
-
-SUBJECT="/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=yzaoui.42.fr/UID=yzaoui"
-
-openssl req -x509 -nodes -out $CERT_PATH -keyout $KEY_PATH -subj "$SUBJECT"
-
+openssl req -x509 -nodes -out $CERT_PATH -keyout $KEY_PATH -subj "$INFORMATION_FOR_SSL"

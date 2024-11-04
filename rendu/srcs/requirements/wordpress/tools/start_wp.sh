@@ -6,7 +6,6 @@ sleep 5
 #     sleep 2
 # done
 
-WP_PATH="/var/www/wordpress"
 
 # A suprimer
 MYSQL_DATABASE="data_name"
