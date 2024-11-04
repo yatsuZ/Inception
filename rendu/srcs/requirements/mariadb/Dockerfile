@@ -1,5 +1,7 @@
 FROM alpine:3.19
 
+RUN env
+
 RUN apk update && \
 	apk add --no-cache \
 	vim \

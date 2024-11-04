@@ -1,5 +1,11 @@
 #version: "3.9"
 
+
+- SQL_NAME_DATABASE
+- SQL_NAME_USER
+- SQL_PASSWORD_USER
+- SQL_PASSWORD_ROOT
+
 services:
   nginx:
     container_name: nginx
@@ -14,6 +20,11 @@ services:
     depends_on:
       - wordpress
     env_file: .env
+	environment:
+	  - WP_PATH=${WP_PATH} 
+	  - CERT_PATH=${CERT_PATH}
+	  - KEY_PATH=${KEY_PATH} 
+	  - INFORMATION_FOR_SSL=${INFORMATION_FOR_SSL}
     ports:
       - "443:443"
     restart: on-failure
