@@ -1,16 +1,21 @@
 #!/usr/bin/env sh
 
+# Afficher les valeurs des variables d'environnement
+echo "SQL_NAME_DATABASE: ${SQL_NAME_DATABASE}"
+echo "SQL_NAME_USER: ${SQL_NAME_USER}"
+echo "SQL_PASSWORD_USER: ${SQL_PASSWORD_USER}"
+echo "SQL_PASSWORD_ROOT: ${SQL_PASSWORD_ROOT}"
 
 if find /var/lib/mysql -mindepth 1 -maxdepth 1 | read; then
-	echo "db exists"
+    echo "db exists"
 else
-	echo "need to create db"
-	mysql_install_db -umysql --ldata=/var/lib/mysql
-	mariadbd -umysql &
-	sleep 1
+    echo "need to create db"
+    mysql_install_db -umysql --ldata=/var/lib/mysql
+    mariadbd -umysql &
+    sleep 1
 
-	echo "created by using a script sql"
-	# Exécuter le script SQL avec des variables d'environnement
+    echo "created by using a script sql"
+    # Exécuter le script SQL avec des variables d'environnement
     envsubst < /bin/init_db.sql | mysql -u root
     if [ $? -ne 0 ]; then
         echo "Error during database creation"
@@ -19,10 +24,8 @@ else
 
     echo "Database and user created"
 
-	mysqladmin shutdown -p"${SQL_PASSWORD_ROOT}"
-
+    mysqladmin shutdown -p"${SQL_PASSWORD_ROOT}"
 fi
-
 
 exec mariadbd -umysql
 

@@ -23,14 +23,15 @@ RUN apk update && \
     php-json \
     php-xml
 
-COPY ./conf/php82_php-fpm_d_www.conf /etc/php82/php-fpm.d/www.conf
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x wp-cli.phar && \
     mv wp-cli.phar /usr/local/bin/wp
 
+COPY ./conf/php82_php-fpm_d_www.conf /etc/php82/php-fpm.d/www.conf
 COPY ./tools/start_wp.sh /usr/local/bin/start_wp.sh
-RUN chmod +x /usr/local/bin/start_wp.sh
+COPY ./conf/wp-config-sample.php /etc/wp-config-sample.php 
+
 
 ENTRYPOINT ["/usr/local/bin/start_wp.sh"]
 CMD [] 

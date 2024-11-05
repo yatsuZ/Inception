@@ -12,11 +12,6 @@ services:
     depends_on:
       - wordpress
     env_file: .env
-    environment:
-      - WP_PATH=${WP_PATH} 
-      - CERT_PATH=${CERT_PATH}
-      - KEY_PATH=${KEY_PATH} 
-      - INFORMATION_FOR_SSL=${INFORMATION_FOR_SSL}
     ports:
       - "443:443"
     restart: on-failure
