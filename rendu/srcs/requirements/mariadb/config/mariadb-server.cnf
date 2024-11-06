@@ -6,8 +6,8 @@
 [server]
 
 # this is only for the mysqld standalone daemon
+# log_error = /var/lib/mysql/mariadb.log
 [mysqld]
-log_error = /var/lib/mysql/mariadb.log
 datadir = /var/lib/mysql
 socket = /run/mysqld/mysqld.sock
 bind-address = 0.0.0.0
