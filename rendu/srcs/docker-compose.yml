@@ -38,16 +38,17 @@ services:
 
   wordpress:
     container_name: wordpress
-    build: 
+    build:
       context: requirements/wordpress
       dockerfile: Dockerfile
+    depends_on:
+      mariadb:
+        condition: service_healthy
     image: wordpress-img
     volumes:
       - wordpress:/var/www/wordpress
     networks:
       - inception
-    depends_on:
-      - mariadb
     env_file: .env
     environment:
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
@@ -57,6 +58,7 @@ services:
     restart: on-failure
     ports:
       - "9000:9000"
+
 
 volumes:
   wordpress:

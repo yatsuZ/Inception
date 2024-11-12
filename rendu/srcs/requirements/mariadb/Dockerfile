@@ -17,4 +17,6 @@ COPY ./config/config_vim  /root/.vimrc
 COPY ./tool/init_maria_mysql.sh /bin/init_maria_mysql.sh
 COPY ./tool/init_db.sql /bin/init_db.sql
 
+HEALTHCHECK --start-period=5s --timeout=5s CMD mysql
+
 CMD ["sh", "/bin/init_maria_mysql.sh"]
