@@ -34,10 +34,13 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
         done
 
         echo -e "${GREEN}Connexion à la base de données réussie${RESET}"
-        
+
+
+        echo -e "${YELLOW}Configuration du \"wp-config.php\" ${RESET}"
         # Utilisation de wp-cli pour créer le fichier wp-config.php
 #        wp config create --dbname="$SQL_NAME_DATABASE" --dbuser="$SQL_NAME_USER" --dbpass="$SQL_PASSWORD_USER" --dbhost="$SQL_HOST" --path="$WP_PATH"
-#		sed "s/username_here/$SQL_NAME_USER/;s/password_here/$SQL_PASSWORD/;s/REDIS_PASSWORD/$REDIS_PASSWORD/;" /etc/wp-config-sample.php > wp-config.php
+        sed "s/username_here/$SQL_NAME_USER/;s/password_here/$SQL_PASSWORD_USER/;s/localhost/$SQL_HOST/;" /var/www/wordpress/wp-config-sample.php > /var/www/wordpress/wp-config.php
+        echo "define( 'WPLANG', 'fr_FR' );" >> /var/www/wordpress/wp-config.php
 
         # Installation de WordPress avec WP-CLI
         # wp core install --url="http://example.com" --title="Mon Site WordPress" --admin_user="admin" --admin_password="admin_password" --admin_email="email@example.com" --path="$WP_PATH"
