@@ -37,11 +37,11 @@ services:
     ports:
       - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD", "mysql"]
+      interval: 20s
+      timeout: 10s
       retries: 6
-
+      start_period: 30s
 
   wordpress:
     container_name: wordpress
