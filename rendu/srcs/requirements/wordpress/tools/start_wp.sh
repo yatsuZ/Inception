@@ -18,7 +18,7 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
 
     # Télécharger et extraire WordPress
     wget https://wordpress.org/latest.tar.gz -P /tmp
-    tar -xzf /tmp/latest.tar.gz -C /tmp
+    tar -xzf /tmp/latest.tar.gz -C /tmp > /dev/null
     mv /tmp/wordpress/* "$WP_PATH"
     rm -rf /tmp/latest.tar.gz /tmp/wordpress
 

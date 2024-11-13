@@ -1,5 +1,6 @@
 services:
   nginx:
+    init: true
     container_name: nginx
     build:
       context: requirements/nginx
@@ -32,7 +33,7 @@ services:
       - SQL_PASSWORD_ROOT=${SQL_PASSWORD_ROOT}
     volumes:
       - mariadb:/var/lib/mysql
-    restart: unless-stopped
+    restart: on-failure
     ports:                 
       - "3306:3306"
 
