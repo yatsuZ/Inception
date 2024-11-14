@@ -15,9 +15,10 @@ services:
     env_file: .env
     ports:
       - "443:443"
-    restart: on-failure
+    restart: always
 
   mariadb:
+    init: true
     container_name: mariadb
     build: 
       context: requirements/mariadb
@@ -33,17 +34,18 @@ services:
       - SQL_PASSWORD_ROOT=${SQL_PASSWORD_ROOT}
     volumes:
       - mariadb:/var/lib/mysql
-    restart: on-failure
+    restart: always
     ports:
       - "3306:3306"
     healthcheck:
-      test: ["CMD", "mysql"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 20s
       timeout: 10s
-      retries: 6
+      retries: 15
       start_period: 30s
 
   wordpress:
+    init: true
     container_name: wordpress
     build:
       context: requirements/wordpress
@@ -62,24 +64,24 @@ services:
       - SQL_NAME_USER=${SQL_NAME_USER}
       - SQL_PASSWORD_USER=${SQL_PASSWORD_USER}
       - SQL_PASSWORD_ROOT=${SQL_PASSWORD_ROOT}
-    restart: on-failure
+    restart: always
     ports:
       - "9000:9000"
 
 
 volumes:
   wordpress:
-    # driver: local
-    # driver_opts:
-    #   type: 'none'
-    #   o: 'bind'
-    #   device: '/Users/login/data/wordpress'
+    #driver: local
+    #driver_opts:
+    #  type: 'none'
+    #  o: 'bind'
+    #  device: '/Users/login/data/wordpress'
   mariadb:
-    # driver: local
-    # driver_opts:
-    #   type: 'none'
-    #   o: 'bind'
-    #   device: '/Users/login/data/mariadb'
+    #driver: local
+    #driver_opts:
+    #  type: 'none'
+    #  o: 'bind'
+    # device: '/Users/login/data/mariadb'
 
 networks:
   inception:

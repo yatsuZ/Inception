@@ -38,16 +38,15 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
 
         echo -e "${YELLOW}Configuration du \"wp-config.php\" ${RESET}"
         # Utilisation de wp-cli pour créer le fichier wp-config.php
-#        wp config create --dbname="$SQL_NAME_DATABASE" --dbuser="$SQL_NAME_USER" --dbpass="$SQL_PASSWORD_USER" --dbhost="$SQL_HOST" --path="$WP_PATH"
         sed "s/database_name_here/$SQL_NAME_DATABASE/;s/username_here/$SQL_NAME_USER/;s/password_here/$SQL_PASSWORD_USER/;s/localhost/$SQL_HOST/;" /var/www/wordpress/wp-config-sample.php > /var/www/wordpress/wp-config.php
         echo "define( 'WPLANG', 'fr_FR' );" >> /var/www/wordpress/wp-config.php
 
         # Installation de WordPress avec WP-CLI
-        # wp core install --url="http://example.com" --title="Mon Site WordPress" --admin_user="admin" --admin_password="admin_password" --admin_email="email@example.com" --path="$WP_PATH"
+        wp core install --url="https://localhost"  --title="Mon Site WordPress" --admin_user="admin" --admin_password="admin_password" --admin_email="email@example.com" --path="$WP_PATH"
 
         # Installation et activation des plugins, si nécessaire
-        # wp plugin install wp-redis --activate --path="$WP_PATH"
-        # wp redis enable --path="$WP_PATH"
+        wp plugin install wp-redis --activate --path="$WP_PATH"
+        wp redis enable --path="$WP_PATH"
 
         echo -e "${GREEN}Fichier wp-config.php créé et WordPress installé avec succès.${RESET}"
     else
