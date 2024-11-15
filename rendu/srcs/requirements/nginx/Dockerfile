@@ -30,4 +30,6 @@ RUN /root/generateur_certifica_dans_image.sh
 
 EXPOSE 443
 
-CMD [ "nginx", "-g", "daemon off;" ]
+ENTRYPOINT [ "nginx" ]
+
+CMD ["-g", "daemon off;" ]

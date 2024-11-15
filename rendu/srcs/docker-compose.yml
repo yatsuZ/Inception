@@ -28,6 +28,7 @@ services:
       - inception
     env_file: .env
     environment:
+      - MARIA_PATH=${MARIA_PATH}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}
       - SQL_PASSWORD_USER=${SQL_PASSWORD_USER}
