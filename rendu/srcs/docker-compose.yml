@@ -61,6 +61,8 @@ services:
       - inception
     env_file: .env
     environment:
+      - TITLE_OF_SITE=${TITLE_OF_SITE}
+      - URL__OF_SITE=${URL__OF_SITE}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}
       - SQL_PASSWORD_USER=${SQL_PASSWORD_USER}
