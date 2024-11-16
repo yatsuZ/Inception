@@ -72,17 +72,17 @@ services:
 
 volumes:
   wordpress:
-    #driver: local
-    #driver_opts:
-    #  type: 'none'
-    #  o: 'bind'
-    #  device: '/Users/login/data/wordpress'
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './data_docker_compose/wordpress'
   mariadb:
-    #driver: local
-    #driver_opts:
-    #  type: 'none'
-    #  o: 'bind'
-    # device: '/Users/login/data/mariadb'
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: './data_docker_compose/mariadb'
 
 networks:
   inception:
