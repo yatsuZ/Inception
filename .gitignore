@@ -1,0 +1,7 @@
+# Ignorer le contenu des répertoires mariadb et wordpress
+rendu/srcs/data_docker_compose/mariadb/*
+rendu/srcs/data_docker_compose/wordpress/*
+
+# Ne pas ignorer les répertoires eux-mêmes
+!rendu/srcs/data_docker_compose/mariadb/.gitkeep
+!rendu/srcs/data_docker_compose/wordpress/.gitkeep
