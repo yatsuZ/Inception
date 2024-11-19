@@ -11,7 +11,7 @@ L'objectif principal est de créer et de gérer une infrastructure composée de 
 |-------|--------|------|
 | **Documentation et préparation** | | |
 | Lire le sujet et rédiger les [objectifs](./objectif.md) | ✔️ | [objectif.md](./objectif.md) |
-| Écrire et documenter toutes les [notions](./concepts/) nécessaires | ✔️ | [concepts](./concepts/) |
+| Écrire et documenter toutes les [notions](./concepts/) nécessaires | ✔️ | [documentation GENERAL !!](./concepts/documentation.md) |
 | **Mise en œuvre technique** | | |
 | Étape 1 : Création de la VM | ✔️ | [1_Creation_de_la_VM.md](./etape/1_Creation_de_la_VM.md) |
 | Étape 1.1 : Installation et utilisation de SSH | ✔️ | [1-1_SSH_utilisation.md](./etape/1-1_SSH_utilisation.md) |
