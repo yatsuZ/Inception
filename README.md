@@ -7,21 +7,21 @@ L'objectif principal est de créer et de gérer une infrastructure composée de 
 
 ## Plan d'action
 
-| Tâche | Statut |
-|-------|--------|
-| **Documentation et préparation** | |
-| Lire le sujet et rédiger les [objectifs](./objectif.md) | ✔️ |
-| Écrire et documenter toutes les [notions](./concepts/) nécessaires | ✔️ |
-| **Mise en œuvre technique** | |
-| Étape 1 : [Création de la VM](./etape/1_Creation_de_la_VM.md) | ✔️ |
-| Étape 1.1 : [Installation et utilisation de SSH](./etape/1-1_SSH_utilisation.md) | ✔️ |
-| Étape 2 : [Installation de Docker](./etape/2_installation_de_docker.md) | ✔️ |
-| Étape 3 : [Réalisation des services individuels](./etape/3_installation_des_services.md) | ✔️ |
-| Étape 3.1 : [Installation de Nginx](./etape/Instalation_des_services/1_Instalation_Nginx.md) | ✔️ |
-| Étape 3.2 : [Installation de MariaDB](./etape/Instalation_des_services/2_Instalation_MariaDB.md) | ✔️ |
-| Étape 3.3 : [Installation de WordPress](./etape/Instalation_des_services/3_Instalation_WordPress.md) | ✔️ |
-| Étape 4 : Intégration des services via Docker Compose | 🔄 En cours |
-| Étape 5 : Validation et tests finaux | ❌ |
+| Tâche | Statut | Lien |
+|-------|--------|------|
+| **Documentation et préparation** | | |
+| Lire le sujet et rédiger les [objectifs](./objectif.md) | ✔️ | [objectif.md](./objectif.md) |
+| Écrire et documenter toutes les [notions](./concepts/) nécessaires | ✔️ | [concepts](./concepts/) |
+| **Mise en œuvre technique** | | |
+| Étape 1 : Création de la VM | ✔️ | [1_Creation_de_la_VM.md](./etape/1_Creation_de_la_VM.md) |
+| Étape 1.1 : Installation et utilisation de SSH | ✔️ | [1-1_SSH_utilisation.md](./etape/1-1_SSH_utilisation.md) |
+| Étape 2 : Installation de Docker | ✔️ | [2_installation_de_docker.md](./etape/2_installation_de_docker.md) |
+| Étape 3 : Réalisation des services individuels | ✔️ | [3_installation_des_services.md](./etape/3_installation_des_services.md) |
+| Étape 3.1 : Installation de Nginx | ✔️ | [3-1_Instalation_Nginx.md](./etape/Instalation_des_services/1_Instalation_Nginx.md) |
+| Étape 3.2 : Installation de MariaDB | ✔️ | [3-2_Instalation_MariaDB.md](./etape/Instalation_des_services/2_Instalation_MariaDB.md) |
+| Étape 3.3 : Installation de WordPress | ✔️ | [3-3_Instalation_WordPress.md](./etape/Instalation_des_services/3_Instalation_WordPress.md) |
+| Étape 4 : Rédaction du fichier Docker Compose | 🔄 En cours | [4_redaction_du_docker_compose.md](./etape/4_redaction_du_docker_compose.md) |
+| Étape 5 : Finalisation et objectifs finaux du projet | ❌ | [5_faire_les_derniere_objefctif_du_projet.md](./etape/5_faire_les_derniere_objefctif_du_projet.md) |
 
 ## Structure du projet
 

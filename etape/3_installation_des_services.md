@@ -8,12 +8,13 @@ Le sujet montre un exemple d'arborescence , comme illustré ci-dessous :
 
 ![arboraissance du rendu](./../ilustration/arboraissance_du_rendu.png)
 
-Voici une explication des différents fichiers/dossiers :
+Voici une explication des différents fichiers/dossiers de mon arboraissance :
 - `Makefile` : Utilisé pour automatiser la compilation et la gestion des services Docker.
-- `secrets/` : Contient des fichiers sensibles comme les mots de passe de la base de données. **Note : Ces informations doivent être protégées et ne jamais être incluses dans Git.**
+- `secrets/` : Contient des fichiers sensibles comme les mots de passe de la base de données. **Note : Ces informations doivent être protégées et ne jamais être incluses dans Git. lors du rendu**
 - `srcs/` : Contient tous les fichiers nécessaires pour configurer et exécuter les services Docker.
   - `docker-compose.yml` : Fichier principal pour orchestrer les différents services conteneurisés.
   - `.env` : Fichier d'environnement pour stocker les variables sensibles.
+  -  Refaire laffcihage de larboraissance
 
 ```sh
 .
