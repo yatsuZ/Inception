@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Ce fichier détaille les objectifs spécifiques du projet "Inception" en fonction du sujet fourni dans `fr.subject.Inception.pdf`.
+Ce fichier détaille les objectifs spécifiques du projet "Inception" en fonction du sujet fourni dans [`fr.subject.Inception.pdf`](./fr.subject.Inception.pdf).
 
 ## Objectifs
 
