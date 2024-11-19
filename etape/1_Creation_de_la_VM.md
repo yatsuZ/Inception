@@ -64,7 +64,7 @@ VirtualBox est celui utilisé sur les PC de l'école. J'ai déjà travaillé des
 Cela n'a pas d'importance pour le projet, puisque Docker nous permettra d'utiliser n'importe quel OS pour les services.
 Juste pour le projet, il est recommandé d'installer un OS avec une interface graphique.
 
-> Je choisie Alpine.
+> Je choisis Alpine.
 
 ## Comment créer la VM ?
 
@@ -86,11 +86,14 @@ Suivre la vidéo de démonstration mais après avoir installé, se connecter en 
 
 ### Installation Debian
 
-1. Obtenir l'ISO de Debian : https://www.debian.org/download.fr.html  
-2. Et débrouillez-vous... avec VirtualBox / votre hyperviseur pour créer votre VM.
+Pour installer Debian, procédez ainsi :
+
+1. Téléchargez l'ISO depuis le site officiel : [Debian](https://www.debian.org/download.fr.html).  
+2. Faire une installation similaire aux projet Born2BeRoot
 
 ### Installation Windows
 
-1. Obtenir l'ISO de Windows : https://www.microsoft.com/fr-fr/software-download/windows11  
-2. Même moi, je ne sais plus comment faire l'installation de Windows, mdr. Débrouillez-vous !
-[Vidéo de démonstration](https://youtu.be/rp6IR3BnPs0?si=ctIE8LCzSvZ5mDPU)
+Pour installer Windows :
+
+1. Téléchargez l'ISO depuis la [page officielle de Microsoft](https://www.microsoft.com/fr-fr/software-download/windows11).  
+2. Suivez ce [guide vidéo](https://youtu.be/rp6IR3BnPs0?si=ctIE8LCzSvZ5mDPU) 

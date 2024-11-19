@@ -46,24 +46,15 @@ Voici l'arborescence obtenue de Nginx :
 Voir [Docker info si vous ne comprenez pas certains mots-clés](./../../concepts/Dockerfile_info.md).
 
 ```Dockerfile
-# Spécifie l'image
 FROM alpine:3.19
 
-# Installation de services, mais avant mise à jour des paquets
 RUN apk update; apk upgrade
-
-# Installation du serveur web
 RUN apk add nginx
-# Installation d'un éditeur de texte
 RUN apk add vim
-# Installation d'un outil pour transférer des données
 RUN apk add curl
-# Installation d'un interpréteur de commandes
 RUN apk add bash
-# Installation pour gérer les certificats SSL
 RUN apk add openssl
 
-# Création de dossiers et droits de groupe
 RUN mkdir -p /etc/nginx/ssl
 RUN mkdir -p /var/run/nginx
 RUN mkdir -p /var/www/html
@@ -73,18 +64,22 @@ RUN mkdir -p /etc/nginx/snippets
 RUN chmod 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html
 
-# Copie de fichiers de configuration et du script
 COPY ./tools/generateur_certifica.sh /root/generateur_certifica_dans_image.sh
 COPY ./conf/config_vim /root/.vimrc 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
-# Génération d'une clé et d'un certificat TLS
+
 RUN /root/generateur_certifica_dans_image.sh
+
+
+#RUN echo "Bienvenue sur mon serveur NGINX !" > /var/www/html/index.html
 
 EXPOSE 443
 
-CMD [ "nginx", "-g", "daemon off;" ]
+ENTRYPOINT [ "nginx" ]
+
+CMD ["-g", "daemon off;" ]
 ```
 
 ### Explication :
@@ -97,8 +92,15 @@ CMD [ "nginx", "-g", "daemon off;" ]
 2. **EXPOSE 443**
    - Cette instruction expose le port 443, utilisé pour les connexions HTTPS, afin que l'image Docker sache qu'elle écoute ce port.
 
-3. **CMD ["nginx", "-g", "daemon off;"]**
-   - La commande CMD définit l'action par défaut à exécuter lorsque le conteneur démarre. Ici, il s'agit de démarrer Nginx en mode "non-daemon", c'est-à-dire sans passer en arrière-plan, ce qui est nécessaire dans un conteneur Docker.
+3. **ENTRYPOINT ["nginx"]**
+   - L'instruction **ENTRYPOINT** définit le programme à exécuter lorsqu'un conteneur basé sur cette image est lancé. Ici, le programme spécifié est `nginx`. 
+   - Cela permet d'exécuter Nginx en tant que processus principal du conteneur. Cette commande ne sera **pas remplacée** si des arguments sont passés au conteneur lors de son lancement. 
+   - **ENTRYPOINT** est utilisé ici pour définir un comportement principal et constant : démarrer Nginx.
+
+4. **CMD ["-g", "daemon off;"]**
+   - La commande **CMD** définit les arguments par défaut à passer à l'exécutable spécifié dans **ENTRYPOINT**. 
+   - Ici, avec `ENTRYPOINT ["nginx"]`, la commande **CMD** passe l'argument `-g "daemon off;"` à Nginx, ce qui permet de le lancer en mode "non-daemon" (c'est-à-dire sans le mettre en arrière-plan). Ce mode est nécessaire dans un conteneur Docker pour que le processus principal reste en premier plan, permettant ainsi au conteneur de continuer à fonctionner correctement. 
+   - Si des arguments sont fournis lors du lancement du conteneur, ces derniers remplaceront les valeurs spécifiées dans **CMD**, mais **ENTRYPOINT** restera inchangé.
 
 ---
 
@@ -139,78 +141,60 @@ pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 
 events {
-    worker_connections 768;
+	worker_connections 768;
 }
 
 http {
-    server {
-        listen 443 ssl;
-        ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_certificate /etc/nginx/ssl/nginx_tls_inception.crt;
-        ssl_certificate_key /etc/nginx/ssl/nginx_tls_inception.key;
+	include /etc/nginx/mime.types;
+	default_type application/octet-stream;
+	server {
+		listen 443 ssl;
+		ssl_protocols TLSv1.2 TLSv1.3;
+		ssl_certificate /etc/nginx/ssl/nginx_tls_inception.crt;
+		ssl_certificate_key /etc/nginx/ssl/nginx_tls_inception.key;
 
-        root /var/www/html;
-        server_name localhost;
-        index index.php index.html index.htm;
+		root /var/www/wordpress; #/var/www/html;
+		server_name localhost;
+		index index.php index.html index.htm;
 
-        location / {
-            try_files $uri $uri/ =404;
-        }
 
-        location ~ \.php$ {    
-            include snippets/fastcgi-php.conf;
-            # fastcgi_pass wordpress:9000;
-        }
-    }
+		location / {
+			try_files $uri $uri/ /index.php$is_args$args;
+		}
+
+		location ~ \.php$ {
+			include snippets/fastcgi-php.conf;
+			fastcgi_pass wordpress:9000;
+			fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+			include fastcgi_params;
+		}
+	}
 }
 ```
 
 #### Explications :
 
-1. **`user www-data;`**
-   - Définit l'utilisateur sous lequel Nginx s'exécute. Par défaut, Nginx utilise l'utilisateur `www-data` pour des raisons de sécurité.
+1. **Configuration globale :**
+   - **user www-data** : Nginx s'exécute avec l'utilisateur `www-data` pour des raisons de sécurité.
+   - **worker_processes auto** : Détermine automatiquement le nombre de processus de travail.
+   - **include /etc/nginx/modules-enabled/*.conf** : Inclut les modules supplémentaires de Nginx.
 
-2. **`worker_processes auto;`**
-   - Configure le nombre de processus de travail (workers) que Nginx doit utiliser. L'option `auto` permet à Nginx de déterminer automatiquement le nombre de processus en fonction des ressources disponibles.
+2. **Bloc `http` :**
+   - **ssl_protocols TLSv1.2 TLSv1.3** : Active TLS 1.2 et 1.3 pour les connexions sécurisées.
+   - **ssl_certificate /etc/nginx/ssl/nginx_tls_inception.crt** : Définit le certificat SSL.
+   - **root /var/www/wordpress** : Spécifie le répertoire racine du site.
+   - **server_name localhost** : Le serveur répond à `localhost`.
+   - **index index.php index.html** : Liste des fichiers index.
 
-3. **`pid /run/nginx.pid;`**
-   - Définit l'emplacement du fichier PID de Nginx. Ce fichier contient l'ID du processus principal de Nginx.
+3. **Bloc `location / { ... }` :**
+   - **try_files $uri $uri/ /index.php$is_args$args** : Recherche des fichiers ou redirige vers `index.php` si non trouvé.
 
-4. **`include /etc/nginx/modules-enabled/*.conf;`**
-   - Inclut tous les fichiers de configuration des modules activés, ce qui permet de charger des fonctionnalités supplémentaires dans Nginx.
+4. **Bloc `location ~ \.php$ { ... }` :**
+   - **fastcgi_pass wordpress:9000** : Envoie les requêtes PHP au serveur PHP-FPM.
+   - **include snippets/fastcgi-php.conf** : Inclut la configuration PHP pour FastCGI.
+   - **fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name** : Définit le chemin du fichier PHP.
 
-5. **`events { ... }`**
-   - La section `events` configure les paramètres de gestion des connexions, comme le nombre maximal de connexions simultanées par worker.
-
-6. **`http { ... }`**
-   - La section `http` contient les paramètres de configuration pour le traitement des requêtes HTTP.
-
-   - **`listen 443 ssl;`**
-     - Configure Nginx pour écouter sur le port 443 (HTTPS) avec SSL activé.
-
-   - **`ssl_protocols TLSv1.2 TLSv1.3;`**
-     - Définit les versions de SSL/TLS autorisées. Ici, les versions 1.2 et 1.3 sont activées pour assurer une connexion sécurisée.
-
-   - **`ssl_certificate` et `ssl_certificate_key`**
-     - Définissent les chemins vers le certificat SSL et la clé privée nécessaires pour établir une connexion HTTPS.
-
-   - **`root /var/www/html;`**
-     - Spécifie le répertoire racine des fichiers de votre site web.
-
-   - **`server_name localhost;`**
-     - Définit le nom du serveur. Ici, il est défini sur `localhost`, mais il peut être remplacé par un nom de domaine réel.
-
-   - **`index index.php index.html index.htm;`**
-     - Spécifie les fichiers à utiliser comme index (page d'accueil) dans l'ordre de priorité.
-
-   - **`location / { ... }`**
-     - Définit le comportement pour la racine du site. La directive `try_files` tente de servir un fichier ou un répertoire correspondant à la requête. Si rien n'est trouvé, elle renvoie une erreur 404.
-
-   - **`location ~ \.php$ { ... }`**
-     - Cette section gère les fichiers PHP. Elle inclut le fichier de configuration `fastcgi-php.conf` pour traiter les requêtes PHP via FastCGI.
-     - La ligne **`# fastcgi_pass wordpress
-
-:9000;`** est commentée pour l'instant, car elle sera configurée ultérieurement lors de la mise en place de WordPress.
+En résumé, ce fichier configure un serveur Nginx sécurisé pour servir un site WordPress en HTTPS, rediriger les requêtes PHP vers PHP-FPM et gérer les fichiers statiques.
 
 ### 2. Script pour générer les certificats
 

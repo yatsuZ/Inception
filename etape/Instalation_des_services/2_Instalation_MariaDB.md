@@ -41,24 +41,21 @@ Pour plus d'informations, consulte le [site officiel](https://mariadb.com/kb/fr/
 ```Dockerfile
 FROM alpine:3.19
 
-# À modifier
-ENV SQL_NAME_DATABASE=nom_de_database_test
-ENV SQL_NAME_USER=nom_utilisateur 
-ENV SQL_PASSWORD_USER=mdp_utilisateur
-ENV SQL_PASSWORD_ROOT=mdp_root
+RUN apk update && \
+	apk add --no-cache \
+	vim \
+	bash \
+	mariadb mariadb-client \
+	envsubst \
+	&& rm -rf /var/cache/apt/*
 
-RUN apk add --no-cache mariadb mariadb-client bash vim envsubst
+RUN mkdir -p /var/lib/mysql/ /run/mysqld
+RUN chown -R mysql:mysql /var/lib/mysql/ /run/mysqld
 
-RUN mkdir -p /var/lib/mysql/ /run/mysqld && \
-    chown -R mysql:mysql /var/lib/mysql/ /run/mysqld
-
-COPY ./config/mariadb-server.cnf /etc/my.cnf.d/
-COPY ./config/config_vim /root/.vimrc
+COPY ./config/mariadb-server.cnf  /etc/my.cnf.d/
+COPY ./config/config_vim  /root/.vimrc
 COPY ./tool/init_maria_mysql.sh /bin/init_maria_mysql.sh
 COPY ./tool/init_db.sql /bin/init_db.sql
-
-# À modifier peut-être
-EXPOSE 3306
 
 CMD ["sh", "/bin/init_maria_mysql.sh"]
 ```
@@ -94,35 +91,51 @@ user = mysql
 ### `init_maria_mysql.sh`
 
 ```sh
-#!/usr/bin/env sh
-
-if find /var/lib/mysql -mindepth 1 | read; then
-    echo "La base de données existe déjà."
+if find ${MARIA_PATH} -mindepth 1 -maxdepth 1 | read; then
+    echo -e "${GREEN}La base de données existe déjà.${NC}"
 else
-    echo "Création de la base de données..."
-    mysql_install_db --user=mysql --ldata=/var/lib/mysql
-    mariadbd --user=mysql &
+    echo -e "${YELLOW}La base de données doit être créée.${NC}"
+    mysql_install_db -umysql --ldata=/var/lib/mysql
+    mariadbd -umysql &
     sleep 1
 
-    echo "Création via un script SQL..."
+    echo -e "${YELLOW}Création de la base de données et de l'utilisateur via un script SQL.${NC}"
     envsubst < /bin/init_db.sql | mysql -u root
-    [ $? -ne 0 ] && echo "Erreur lors de la création de la base de données" && exit 1
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Erreur lors de la création de la base de données.${NC}"
+        exit 1
+    fi
+
+    echo -e "${GREEN}Base de données et utilisateur créés avec succès.${NC}"
 
     mysqladmin shutdown -p"${SQL_PASSWORD_ROOT}"
 fi
 
-exec mariadbd --user=mysql
+echo -e "${GREEN}Démarrage du serveur MariaDB...${NC}"
+exec mariadbd -umysql
 ```
+
+#### résumé
+
+En gros je verifie que la bdd existe deja sinon j'installe mysql  puis execute le script sql qui crée des users.
 
 ### `init_db.sql`
 
 ```sql
+-- init_db.sql
 CREATE DATABASE IF NOT EXISTS ${SQL_NAME_DATABASE};
-CREATE USER IF NOT EXISTS '${SQL_NAME_USER}'@'localhost' IDENTIFIED BY '${SQL_PASSWORD_USER}';
-GRANT ALL PRIVILEGES ON ${SQL_NAME_DATABASE}.* TO '${SQL_NAME_USER}'@'localhost';
-ALTER USER 'root'@'localhost' IDENTIFIED BY '${SQL_PASSWORD_ROOT}';
+CREATE USER IF NOT EXISTS '${SQL_NAME_USER}'@'%' IDENTIFIED BY '${SQL_PASSWORD_USER}';
+GRANT ALL PRIVILEGES ON ${SQL_NAME_DATABASE}.* TO '${SQL_NAME_USER}'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '${SQL_PASSWORD_ROOT}' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
 ```
+#### résumé
+
+1. Je crée un base de donée
+2. Je crée un utilisateur
+3. Je donne tout les droit aux root (je lui donne un mdp) et aux user
+4. Je mets a jour les drois
+
 
 ## Test
 

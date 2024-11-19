@@ -1,20 +1,21 @@
-# L'installation des service grace a docker 
+# L'installation des services grâce à Docker
 
-Apres avoir installer docker et docker compose je peux commencer a le configurer voici mon plan
+Après avoir installé Docker et Docker Compose, je peux commencer à les configurer. Voici mon plan.
 
-## 1. Preparer le dossier rendu
+## 1. Préparer le dossier de rendu
 
-Le sujet montre un exemple d'arborescence , comme illustré ci-dessous :
+Le sujet fournit un exemple d'arborescence, illustrée ci-dessous :
 
-![arboraissance du rendu](./../ilustration/arboraissance_du_rendu.png)
+![Arborescence du rendu](./../ilustration/arboraissance_du_rendu.png)
 
-Voici une explication des différents fichiers/dossiers de mon arboraissance :
-- `Makefile` : Utilisé pour automatiser la compilation et la gestion des services Docker.
-- `secrets/` : Contient des fichiers sensibles comme les mots de passe de la base de données. **Note : Ces informations doivent être protégées et ne jamais être incluses dans Git. lors du rendu**
-- `srcs/` : Contient tous les fichiers nécessaires pour configurer et exécuter les services Docker.
-  - `docker-compose.yml` : Fichier principal pour orchestrer les différents services conteneurisés.
-  - `.env` : Fichier d'environnement pour stocker les variables sensibles.
-  -  Refaire laffcihage de larboraissance
+Voici une explication des différents fichiers et dossiers de mon arborescence :
+- **`Makefile`** : Utilisé pour automatiser la gestion des services Docker.
+- **`secrets/`** : Contient des fichiers sensibles, comme les mots de passe de la base de données. **Note : Ces informations doivent être protégées et ne jamais être incluses dans Git lors du rendu.**
+- **`srcs/`** : Contient tous les fichiers nécessaires pour configurer et exécuter les services Docker.
+  - **`docker-compose.yml`** : Fichier principal pour orchestrer les différents services conteneurisés.
+  - **`.env`** : Fichier d'environnement pour stocker les variables sensibles.
+
+Arborescence complète :
 
 ```sh
 .
@@ -24,58 +25,52 @@ Voici une explication des différents fichiers/dossiers de mon arboraissance :
 │   ├── db_password.txt
 │   └── db_root_password.txt
 └── srcs
-	├── docker-compose.yml
-	├── .env
-	└── requirements
-		├── bonus
-		│   └── [...]
-		├── mariadb
-		│   ├── conf
-		│   ├── Dockerfile
-		│   ├── .dockerignore
-		│   └── tools
-		├── nginx
-		│   ├── conf
-		│   ├── Dockerfile
-		│   ├── .dockerignore
-		│   └── tools
-		├── tools
-		└── wordpress
-			└── [...]
+    ├── docker-compose.yml
+    ├── .env
+    └── requirements
+        ├── bonus
+        │   └── [...]
+        ├── mariadb
+        │   ├── conf
+        │   ├── Dockerfile
+        │   ├── .dockerignore
+        │   └── tools
+        ├── nginx
+        │   ├── conf
+        │   ├── Dockerfile
+        │   ├── .dockerignore
+        │   └── tools
+        ├── tools
+        └── wordpress
+            └── [...]
 ```
 
-## Instalation des Docker
+## 2. Installation des services Docker
 
-C'est quoi ? [Information conerncernant un Docker](./../concepts/Dockerfile_info.md)
+### C'est quoi Docker ?
 
+Pour plus d'informations sur Docker et comment il fonctionne, tu peux consulter [ce lien sur Dockerfile](./../concepts/Dockerfile_info.md).
 
-### 1. [Comence a installer le service NGINX](./Instalation_des_services/1_Instalation_Nginx.md)
+### 2.1. [Commencer à installer le service NGINX](./Instalation_des_services/1_Instalation_Nginx.md)
 
-dans le dossier [nginx](./../rendu/srcs/requirements/nginx/) rediger le docker file et toute infomation utile.
+Dans le dossier **[nginx](./../rendu/srcs/requirements/nginx/)**, rédige le Dockerfile et toute information utile.
 
-Objectif : **[Mettre en place un conteneur contenant NGINX avec TLSv1.2 qui fera office de serveur web.](./Instalation_des_services/1_Instalation_Nginx.md)**
+**Objectif** : Mettre en place un conteneur contenant NGINX avec TLSv1.2, qui fera office de serveur web.
 
-### 2. [Comence a installer le service MariaDB](./Instalation_des_services/2_Instalation_MariaDB.md)
+### 2.2. [Commencer à installer le service MariaDB](./Instalation_des_services/2_Instalation_MariaDB.md)
 
-dans le dossier [mariadb](./../rendu/srcs/requirements/mariadb/) rediger le docker file et toute infomation utile.
+Dans le dossier **[mariadb](./../rendu/srcs/requirements/mariadb/)**, rédige le Dockerfile et toute information utile.
 
-Objectif : **[Mettre en place un conteneur contenant MariaDb qui fera office de gestion de base de donnée](./Instalation_des_services/2_Instalation_MariaDB.md)**
+**Objectif** : Mettre en place un conteneur contenant MariaDB, qui fera office de gestion de base de données.
 
-### 3 .[Comence a installer le service WordPress](./Instalation_des_services/3_Instalation_WordPress.md)
+### 2.3. [Commencer à installer le service WordPress](./Instalation_des_services/3_Instalation_WordPress.md)
 
-dans le dossier [wordpress](./../rendu/srcs/requirements/wordpress/) rediger le docker file et toute infomation utile.
+Dans le dossier **[wordpress](./../rendu/srcs/requirements/wordpress/)**, rédige le Dockerfile et toute information utile.
 
-Objectif : **[Mettre en place un conteneur contenant WordPress qui fera office de gestion de page web](./Instalation_des_services/3_Instalation_WordPress.md)**
+**Objectif** : Mettre en place un conteneur contenant WordPress, qui fera office de gestion de pages web.
 
-## Redaction du Docker-Compose
+## 3. Rédaction du Docker Compose
 
-De quoi sagit-il ? voir [documentation](./../concepts/docker_vs_docker_compose.md)
+Après avoir installé et configuré chaque service Docker (NGINX, MariaDB, WordPress), nous allons maintenant les mettre en relation dans un fichier `docker-compose.yml`. Ce fichier permettra de gérer plusieurs services Docker ensemble, facilitant ainsi leur orchestration.
 
-Que fautil rediger et a quoi sa sere 
-en resumer :  Sa sert à [a remplire] et ce qui faudra ecrire dededans sera [a remplis]
-
-Voici le contenue du [`cocker-compose.yml`](./../rendu/srcs/docker-compose.yml) :
-```yml
-```
-
-### Explication
+Pour plus de détails, consulte la section dédiée sur [la rédaction du Docker Compose](./4_redaction_du_docker_compose.md).
