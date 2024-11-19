@@ -33,5 +33,3 @@ COPY ./tools/start_wp.sh /usr/local/bin/start_wp.sh
 RUN chmod +x /usr/local/bin/start_wp.sh
 
 ENTRYPOINT ["/usr/local/bin/start_wp.sh"]
-CMD [] 
-
