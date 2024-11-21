@@ -34,7 +34,6 @@ services:
     secrets:
       - sql_password_root
       - sql_password_user
-    entrypoint: ["/path/to/get_secrets.sh"]
     volumes:
       - mariadb:/var/lib/mysql
     restart: always
@@ -70,7 +69,6 @@ services:
     secrets:
       - sql_password_root
       - sql_password_user
-    entrypoint: ["/path/to/get_secrets.sh"]
     restart: always
     ports:
       - "9000:9000"
@@ -96,6 +94,6 @@ networks:
 
 secrets:
   sql_password_root:
-    file: ./secrets/sql_password_root.txt
+    file: ./../secrets/sql_password_root.txt
   sql_password_user:
-    file: ./secrets/sql_password_user.txt
+    file: ./../secrets/sql_password_user.txt
