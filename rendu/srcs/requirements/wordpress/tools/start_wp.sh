@@ -29,7 +29,7 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
         # Attendre que la base de données soit prête
         until mysql -h "$SQL_HOST" -u "$SQL_NAME_USER" -p"$SQL_PASSWORD_USER" -e "SHOW DATABASES;" > /dev/null 2>&1; do
             echo -e "${YELLOW}En attente de la base de données...${RESET}"
-            echo -e "${YELLOW}Essai de connexion à : $SQL_HOST avec l'utilisateur : $SQL_NAME_USER${RESET}"
+            echo -e "${YELLOW}Essai de connexion à : ${BLUE}$SQL_HOST${YELLOW} avec l'utilisateur : ${BLUE}$SQL_NAME_USER${YELLOW} avec le mot de passe : ${BLUE} $SQL_PASSWORD_USER${RESET} "
             sleep 2
         done
 
