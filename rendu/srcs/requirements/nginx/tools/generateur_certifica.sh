@@ -3,6 +3,10 @@
 ROUGE="\e[31m"
 NOCOLOR="\e[0m"
 
+
+#sed -i "s|TO_REMPLACE|$SERVER_NAME|" /etc/nginx/nginx.conf
+
+
 if ! command -v openssl &> /dev/null
 then
     echo -e $ROUGE "Erreur : 'openssl' n'est pas installé. Veuillez l'installer pour continuer." $NOCOLOR

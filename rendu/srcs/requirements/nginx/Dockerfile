@@ -24,8 +24,7 @@ COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
 
 RUN /root/generateur_certifica_dans_image.sh
-RUN envsubst < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf
-RUN echo /etc/nginx/nginx.conf
+
 #RUN echo "Bienvenue sur mon serveur NGINX !" > /var/www/html/index.html
 
 EXPOSE 443
