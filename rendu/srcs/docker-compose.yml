@@ -65,8 +65,8 @@ services:
       - URL__OF_SITE=${URL__OF_SITE}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}
-      - SQL_PASSWORD_USER=${SQL_PASSWORD_USER}
-      - SQL_PASSWORD_ROOT=${SQL_PASSWORD_ROOT}
+      - SQL_PASSWORD_USER=/run/secrets/sql_password_user
+      - SQL_PASSWORD_ROOT=/run/secrets/sql_password_root
     restart: always
     ports:
       - "9000:9000"
@@ -89,3 +89,9 @@ volumes:
 networks:
   inception:
     driver: bridge
+
+secrets:
+  sql_password_root:
+    file: ./secrets/sql_password_root.txt
+  sql_password_user:
+    file: ./secrets/sql_password_user.txt
