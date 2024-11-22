@@ -63,7 +63,7 @@ services:
     env_file: .env
     environment:
       - TITLE_OF_SITE=${TITLE_OF_SITE}
-      - URL__OF_SITE=${URL__OF_SITE}
+      - SERVER_NAME=${SERVER_NAME}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}
     secrets:
