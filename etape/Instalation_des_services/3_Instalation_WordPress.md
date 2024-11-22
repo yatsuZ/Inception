@@ -189,7 +189,7 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
         echo "define( 'WPLANG', 'fr_FR' );" >> /var/www/wordpress/wp-config.php
 
         # Installation de WordPress avec WP-CLI
-        wp core install --url="$URL__OF_SITE"  --title="$TITLE_OF_SITE" --admin_user="$SQL_NAME_USER" --admin_password="$SQL_PASSWORD_USER" --admin_email="email@example.com" --path="$WP_PATH"
+        wp core install --url="https://$SERVER_NAME"  --title="$TITLE_OF_SITE" --admin_user="$SQL_NAME_USER" --admin_password="$SQL_PASSWORD_USER" --admin_email="email@example.com" --path="$WP_PATH"
 
         # Installation et activation des plugins, si nécessaire
         wp plugin install wp-redis --activate --path="$WP_PATH"
