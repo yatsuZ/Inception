@@ -13,6 +13,8 @@ services:
     depends_on:
       - wordpress
     env_file: .env
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
     ports:
       - "443:443"
     restart: always
