@@ -1,6 +1,5 @@
 Voici les derniere etapes a faire :
 1. Faire un makefile qui devra construire les images pouvoir les excuter les netoyer en gros je lui donne plein de commande predefini
 2. Stocker les volumes dans le chemin "/home/login/data"
-3. nom de domaine de ""
 
 docker-compose down --volumes --rmi all && docker-compose build && docker-compose up -d 
