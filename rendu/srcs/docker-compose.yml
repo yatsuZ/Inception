@@ -5,6 +5,9 @@ services:
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
+    env_file: .env
+    environment:
+      - SERVER_NAME=${SERVER_NAME}
     image: nginx-img
     volumes:
       - wordpress:/var/www/wordpress
@@ -12,9 +15,6 @@ services:
       - inception
     depends_on:
       - wordpress
-    env_file: .env
-    environment:
-      - SERVER_NAME=${SERVER_NAME}
     ports:
       - "443:443"
     restart: always
@@ -30,6 +30,7 @@ services:
       - inception
     env_file: .env
     environment:
+      - SERVER_NAME=${SERVER_NAME}
       - MARIA_PATH=${MARIA_PATH}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}

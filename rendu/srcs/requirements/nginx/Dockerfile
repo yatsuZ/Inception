@@ -1,5 +1,7 @@
 FROM alpine:3.19
 
+ARG SERVER_NAME
+
 RUN apk update; apk upgrade
 RUN apk add nginx
 RUN apk add vim
@@ -21,7 +23,7 @@ COPY ./tools/generateur_certifica.sh /root/generateur_certifica_dans_image.sh
 COPY ./conf/config_vim /root/.vimrc 
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
-
+COPY ./tools/start_server.sh /root/start_server.sh
 
 RUN /root/generateur_certifica_dans_image.sh
 
@@ -29,6 +31,4 @@ RUN /root/generateur_certifica_dans_image.sh
 
 EXPOSE 443
 
-ENTRYPOINT [ "nginx" ]
-
-CMD ["-g", "daemon off;" ]
+ENTRYPOINT [ "/root/start_server.sh" ]

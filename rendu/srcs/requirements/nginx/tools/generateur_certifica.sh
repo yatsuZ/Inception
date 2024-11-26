@@ -3,8 +3,10 @@
 ROUGE="\e[31m"
 NOCOLOR="\e[0m"
 
-
-#sed -i "s|TO_REMPLACE|$SERVER_NAME|" /etc/nginx/nginx.conf
+# sed -i "s|TO_REMPLACE|$SERVER_NAME|" /etc/nginx/nginx_TMP.conf
+# mv /etc/nginx/nginx_TMP.conf /etc/nginx/nginx.conf
+echo $SERVER_NAME > /res.txt
+echo FIN >> /res.txt
 
 
 if ! command -v openssl &> /dev/null
