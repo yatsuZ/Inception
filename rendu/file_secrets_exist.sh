@@ -22,7 +22,7 @@ echo -e "${GREEN}✔ Le répertoire ${YELLOW}$REQUIRED_DIRECTORY ${GREEN}est pr�
 # Décommenter cette section si tu veux vérifier des fichiers spécifiques
 # # Fichiers nécessaires
 # REQUIRED_FILES=(
-#   "./secrets/sql_password_root.txt"
+#   "./secrets/sql_password_admin.txt"
 #   "./secrets/sql_password_user.txt"
 # )
 

@@ -1,14 +1,14 @@
 services:
   nginx:
     init: true
-    container_name: nginx
+    container_name: container-nginx
     build:
       context: requirements/nginx
       dockerfile: Dockerfile
     env_file: .env
     environment:
       - SERVER_NAME=${SERVER_NAME}
-    image: nginx-img
+    image: nginx
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -21,11 +21,11 @@ services:
 
   mariadb:
     init: true
-    container_name: mariadb
+    container_name: container-mariadb
     build: 
       context: requirements/mariadb
       dockerfile: Dockerfile
-    image: mariadb-img
+    image: mariadb
     networks:
       - inception
     env_file: .env
@@ -34,8 +34,9 @@ services:
       - MARIA_PATH=${MARIA_PATH}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}
+      - SQL_NAME_ADMIN=${SQL_NAME_ADMIN}
     secrets:
-      - sql_password_root
+      - sql_password_admin
       - sql_password_user
     volumes:
       - mariadb:/var/lib/mysql
@@ -51,14 +52,14 @@ services:
 
   wordpress:
     init: true
-    container_name: wordpress
+    container_name: container-wordpress
     build:
       context: requirements/wordpress
       dockerfile: Dockerfile
     depends_on:
       mariadb:
         condition: service_healthy
-    image: wordpress-img
+    image: wordpress
     volumes:
       - wordpress:/var/www/wordpress
     networks:
@@ -69,8 +70,9 @@ services:
       - SERVER_NAME=${SERVER_NAME}
       - SQL_NAME_DATABASE=${SQL_NAME_DATABASE}
       - SQL_NAME_USER=${SQL_NAME_USER}
+      - SQL_NAME_ADMIN=${SQL_NAME_ADMIN}
     secrets:
-      - sql_password_root
+      - sql_password_admin
       - sql_password_user
     restart: always
     ports:
@@ -98,7 +100,7 @@ networks:
     driver: bridge
 
 secrets:
-  sql_password_root:
-    file: ./../secrets/sql_password_root.txt
+  sql_password_admin:
+    file: ./../secrets/sql_password_admin.txt
   sql_password_user:
     file: ./../secrets/sql_password_user.txt

@@ -7,7 +7,7 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-export SQL_PASSWORD_ROOT=$(cat /run/secrets/sql_password_root)
+export SQL_PASSWORD_ADMIN=$(cat /run/secrets/sql_password_admin)
 export SQL_PASSWORD_USER=$(cat /run/secrets/sql_password_user)
 
 # Afficher les valeurs des variables d'environnement
@@ -15,7 +15,8 @@ echo -e "${BLUE}MARIA_PATH:${NC} ${MARIA_PATH}"
 echo -e "${BLUE}SQL_NAME_DATABASE:${NC} ${SQL_NAME_DATABASE}"
 echo -e "${BLUE}SQL_NAME_USER:${NC} ${SQL_NAME_USER}"
 echo -e "${BLUE}SQL_PASSWORD_USER:${NC} ${SQL_PASSWORD_USER}"
-echo -e "${BLUE}SQL_PASSWORD_ROOT:${NC} ${SQL_PASSWORD_ROOT}"
+echo -e "${BLUE}SQL_NAME_ADMIN:${NC} ${SQL_NAME_ADMIN}"
+echo -e "${BLUE}SQL_PASSWORD_ADMIN:${NC} ${SQL_PASSWORD_ADMIN}"
 
 # Vérifier si la base de données existe déjà
 if find ${MARIA_PATH} -mindepth 1 -maxdepth 1 | read; then
@@ -28,7 +29,7 @@ else
 
     echo -e "${YELLOW}Création de la base de données et de l'utilisateur via un script SQL.${NC}"
     # Exécuter le script SQL avec des variables d'environnement
-    envsubst < /bin/init_db.sql | mysql -u root
+    envsubst < /bin/init_db.sql | mysql -u ${SQL_NAME_ADMIN}
     if [ $? -ne 0 ]; then
         echo -e "${RED}Erreur lors de la création de la base de données.${NC}"
         exit 1
@@ -36,7 +37,7 @@ else
 
     echo -e "${GREEN}Base de données et utilisateur créés avec succès.${NC}"
 
-    mysqladmin shutdown -p"${SQL_PASSWORD_ROOT}"
+    mysqladmin shutdown -p"${SQL_PASSWORD_ADMIN}"
 fi
 
 echo -e "${GREEN}Démarrage du serveur MariaDB...${NC}"
