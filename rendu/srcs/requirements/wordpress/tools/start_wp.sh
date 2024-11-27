@@ -6,6 +6,9 @@ RED='\033[0;31m'
 BLUE='\033[0;34m'
 RESET='\033[0m'
 
+export SQL_PASSWORD_ROOT=$(cat /run/secrets/sql_password_root)
+export SQL_PASSWORD_USER=$(cat /run/secrets/sql_password_user)
+
 echo -e "${BLUE}Vérification de l'installation de WordPress...${RESET}"
 
 if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then

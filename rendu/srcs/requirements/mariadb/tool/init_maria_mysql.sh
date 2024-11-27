@@ -7,6 +7,9 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+export SQL_PASSWORD_ROOT=$(cat /run/secrets/sql_password_root)
+export SQL_PASSWORD_USER=$(cat /run/secrets/sql_password_user)
+
 # Afficher les valeurs des variables d'environnement
 echo -e "${BLUE}MARIA_PATH:${NC} ${MARIA_PATH}"
 echo -e "${BLUE}SQL_NAME_DATABASE:${NC} ${SQL_NAME_DATABASE}"

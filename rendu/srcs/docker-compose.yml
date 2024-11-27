@@ -83,13 +83,15 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: './data_docker_compose/wordpress'
+      # device: './data_docker_compose/wordpress'
+      device: '/home/yzaoui/data/wordpress'
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: './data_docker_compose/mariadb'
+      device: '/home/yzaoui/data/mariadb'
+      # device: './data_docker_compose/mariadb'
 
 networks:
   inception:
