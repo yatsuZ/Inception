@@ -25,7 +25,7 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
     if [ ! -f "$WP_PATH/wp-config.php" ]; then
 
 
-        until mysql -h "$SQL_HOST" -u "$SQL_NAME_ADMIN" -p"$SQL_PASSWORD_ADMIN" -e "SHOW DATABASES;" > /dev/null 2>&1; do
+        until mysql -h "$SQL_HOST" -u "$SQL_NAME_USER" -p"$SQL_PASSWORD_USER" -e "SHOW DATABASES;" > /dev/null 2>&1; do
             echo -e "${YELLOW}En attente de la base de données...${RESET}"
             echo -e "${YELLOW}Essai de connexion à : ${BLUE}$SQL_HOST${YELLOW} avec l'utilisateur : ${BLUE}$SQL_NAME_USER${YELLOW} avec le mot de passe : ${BLUE} $SQL_PASSWORD_USER${RESET} "
             sleep 2
@@ -34,7 +34,7 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
         echo -e "${GREEN}Connexion à la base de données réussie${RESET}"
 
         echo -e "${YELLOW}Configuration du \"wp-config.php\" ${RESET}"
-        sed "s/database_name_here/$SQL_NAME_DATABASE/;s/username_here/$SQL_NAME_ADMIN/;s/password_here/$SQL_PASSWORD_ADMIN/;s/localhost/$SQL_HOST/;" /var/www/wordpress/wp-config-sample.php > /var/www/wordpress/wp-config.php
+        sed "s/database_name_here/$SQL_NAME_DATABASE/;s/username_here/$SQL_NAME_USER/;s/password_here/$SQL_PASSWORD_USER/;s/localhost/$SQL_HOST/;" /var/www/wordpress/wp-config-sample.php > /var/www/wordpress/wp-config.php
         echo "define( 'WPLANG', 'fr_FR' );" >> /var/www/wordpress/wp-config.php
 
         wp core install --url="https://$SERVER_NAME"  --title="$TITLE_OF_SITE" --admin_user="$SQL_NAME_ADMIN" --admin_password="$SQL_PASSWORD_ADMIN" --admin_email="email@example.com" --path="$WP_PATH"

@@ -29,7 +29,7 @@ else
 
     echo -e "${YELLOW}Création de la base de données et de l'utilisateur via un script SQL.${NC}"
     # Exécuter le script SQL avec des variables d'environnement
-    envsubst < /bin/init_db.sql | mysql -u ${SQL_NAME_ADMIN}
+    envsubst < /bin/init_db.sql | mysql -u root
     if [ $? -ne 0 ]; then
         echo -e "${RED}Erreur lors de la création de la base de données.${NC}"
         exit 1
@@ -37,7 +37,7 @@ else
 
     echo -e "${GREEN}Base de données et utilisateur créés avec succès.${NC}"
 
-    mysqladmin shutdown -p"${SQL_PASSWORD_ADMIN}"
+    mysqladmin shutdown
 fi
 
 echo -e "${GREEN}Démarrage du serveur MariaDB...${NC}"
