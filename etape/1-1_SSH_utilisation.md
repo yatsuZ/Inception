@@ -16,7 +16,11 @@ J'ai une VM et je souhaite utiliser mon PC pour gérer cette VM depuis le termin
 
 ## Comment faire ?
 
+
 ### 1. Installer SSH
+
+
+#### Alpine
 
 Tout d'abord, il faut installer le serveur SSH sur la VM :
 
@@ -31,11 +35,27 @@ Pour vérifier que SSH est bien installé, exécute la commande suivante :
 ssh -V
 ```
 
+#### Debian
+
+Installer OpenSSH:
+
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt install openssh-server
+```
+
+Vérifier le statut de SSH:
+
+```bash
+sudo systemctl status ssh
+```
+
 Cela affichera la version de SSH installée.
 
 ### 2. Configurer SSH
 
-#### Activer SSH au démarrage
+#### Activer SSH au démarrage pour Alpine
 
 Pour démarrer automatiquement le service SSH au démarrage du système, utilise cette commande :
 
@@ -80,8 +100,19 @@ Remplace-la par :
 ```sh
 Port 4242
 ```
+Sauvegarde et quitte l'éditeur. 
 
-Sauvegarde et quitte l'éditeur. Ensuite, redémarre le service SSH pour appliquer les changements :
+#### Debian
+
+Re activer le service SSH pour mettre le nouveau port:
+
+```bash
+sudo systemctl restart ssh
+```
+
+#### Alpnine
+
+Ensuite, redémarre le service SSH pour appliquer les changements :
 
 ```sh
 service sshd restart
