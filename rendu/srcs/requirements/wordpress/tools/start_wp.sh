@@ -42,6 +42,12 @@ if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
         wp plugin install wp-redis --activate --path="$WP_PATH"
         wp redis enable --path="$WP_PATH"
 
+        # Ajout de l'utilisateur supplémentaire
+        echo -e "${YELLOW}Ajout de l'utilisateur WordPress $SQL_NAME_USER...${RESET}"
+        wp user create "$SQL_NAME_USER" "user@example.com" --role="subscriber" --user_pass="$SQL_PASSWORD_USER" --path="$WP_PATH"
+        echo -e "${GREEN}Utilisateur $SQL_NAME_USER ajouté avec succès.${RESET}"
+
+
         echo -e "${GREEN}Fichier wp-config.php créé et WordPress installé avec succès.${RESET}"
     else
         echo -e "${GREEN}WordPress est déjà installé, fichier wp-config.php trouvé.${RESET}"
