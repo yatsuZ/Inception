@@ -19,21 +19,21 @@ fi
 
 echo -e "${GREEN}✔ Le répertoire ${YELLOW}$REQUIRED_DIRECTORY ${GREEN}est présent !${RESET}"
 
-# Décommenter cette section si tu veux vérifier des fichiers spécifiques
-# # Fichiers nécessaires
-# REQUIRED_FILES=(
-#   "./secrets/sql_password_admin.txt"
-#   "./secrets/sql_password_user.txt"
-# )
+Décommenter cette section si tu veux vérifier des fichiers spécifiques
+# Fichiers nécessaires
+REQUIRED_FILES=(
+  "./secrets/sql_password_admin.txt"
+  "./secrets/sql_password_user.txt"
+)
 
-# # Vérifier chaque fichier
-# echo -e "${CYAN}🔧 Vérification des fichiers secrets${RESET}"
-# for FILE in "${REQUIRED_FILES[@]}"; do
-#   if [ ! -f "$FILE" ]; then
-#     echo -e "${RED}❌ Fichier manquant :${YELLOW} $FILE${RESET}"
-#     echo -e "${RED}🚨 Assurez-vous que tous les fichiers secrets sont présents avant de continuer.${RESET}"
-#     exit 1
-#   fi
-# done
+# Vérifier chaque fichier
+echo -e "${CYAN}🔧 Vérification des fichiers secrets${RESET}"
+for FILE in "${REQUIRED_FILES[@]}"; do
+  if [ ! -f "$FILE" ]; then
+    echo -e "${RED}❌ Fichier manquant :${YELLOW} $FILE${RESET}"
+    echo -e "${RED}🚨 Assurez-vous que tous les fichiers secrets sont présents avant de continuer.${RESET}"
+    exit 1
+  fi
+done
 
-# echo -e "${GREEN}✔ Tous les fichiers secrets sont présents !${RESET}"
+echo -e "${GREEN}✔ Tous les fichiers secrets sont présents !${RESET}"

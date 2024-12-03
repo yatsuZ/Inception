@@ -4,7 +4,6 @@
 envsubst '${SERVER_NAME}' < /etc/nginx/nginx.conf > /etc/nginx/nginx_TMP.conf
 mv /etc/nginx/nginx_TMP.conf /etc/nginx/nginx.conf
 echo $SERVER_NAME > /res.txt
-echo "FIN" >> /res.txt
 
 # Lancer Nginx avec la commande "daemon off" pour qu'il fonctionne en premier plan
 exec nginx -g "daemon off;"
