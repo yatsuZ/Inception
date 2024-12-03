@@ -1,5 +1,24 @@
 # Dockerfile
 
+- [Dockerfile](#dockerfile)
+  - [Objectif](#objectif)
+  - [Qu'est-ce qu'un **Dockerfile** ?](#quest-ce-quun-dockerfile-)
+    - [Pourquoi utiliser un Dockerfile ?](#pourquoi-utiliser-un-dockerfile-)
+  - [Mots-clés](#mots-clés)
+  - [Commandes Docker](#commandes-docker)
+    - [1. **docker build**](#1-docker-build)
+    - [2. **docker run**](#2-docker-run)
+    - [3. **docker exec**](#3-docker-exec)
+    - [4. **docker ps**](#4-docker-ps)
+    - [5. **docker stop**](#5-docker-stop)
+    - [6. **docker rm**](#6-docker-rm)
+    - [7. **docker rmi**](#7-docker-rmi)
+    - [8. **docker images**](#8-docker-images)
+  - [Liens utiles pour en savoir plus](#liens-utiles-pour-en-savoir-plus)
+
+
+## Objectif
+
 Ce fichier a pour but d'expliquer les principes de base et utiles du Dockerfile :
 
 1. Définir ce que c'est.

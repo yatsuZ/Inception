@@ -1,35 +1,61 @@
-### 1.5 Utilisation de SSH
+# 1.5 Utilisation de SSH
 
-> **Optionnelle** mais très utile, elle permet de faire des copier-coller depuis votre PC hôte vers la VM.
+- [1.5 Utilisation de SSH](#15-utilisation-de-ssh)
+  - [Intro](#intro)
+  - [Qu'est-ce que SSH](#quest-ce-que-ssh)
+    - [Objectif](#objectif)
+  - [Comment faire](#comment-faire)
+    - [1. Installer SSH](#1-installer-ssh)
+      - [Alpine](#alpine)
+      - [Debian](#debian)
+    - [2. Configurer SSH](#2-configurer-ssh)
+      - [Activer SSH au démarrage pour Alpine](#activer-ssh-au-démarrage-pour-alpine)
+    - [3. Autoriser la connexion root (optionnel)](#3-autoriser-la-connexion-root-optionnel)
+      - [Debian](#debian-1)
+      - [Alpine](#alpine-1)
+    - [4. Configurer VirtualBox](#4-configurer-virtualbox)
+    - [5. Vérification de la connexion](#5-vérification-de-la-connexion)
+      - [Avec la redirection de port :](#avec-la-redirection-de-port-)
+      - [Avec l'adresse IP de la VM :](#avec-ladresse-ip-de-la-vm-)
+    - [Conclusion](#conclusion)
 
-Étape intermédiaire après [la création de la VM](./1_Creation_de_la_VM.md). Ce fichier a pour objectif de documenter l'installation et la configuration de SSH afin de pouvoir manipuler la VM à distance, principalement pour les systèmes basés sur Linux. Pour Windows, je n'ai pas encore de solution précise.
+---
 
-Cela permet de gérer la VM plus facilement et d'être plus à l'aise dans son administration, plutôt que de travailler directement depuis son interface.
+## Intro
 
-## Qu'est-ce que SSH ?
+> **Optionnelle**, mais très utile : SSH permet de manipuler votre VM depuis votre PC hôte en ligne de commande.  
+> Cela simplifie l'administration et améliore la productivité par rapport à l'utilisation directe de l'interface de la VM.
 
-SSH (Secure Shell) est un protocole réseau cryptographique qui permet de se connecter à une machine distante de manière sécurisée. Il est couramment utilisé pour administrer des serveurs et des machines virtuelles à distance via une interface en ligne de commande.
+Cette étape suit la [création de la VM](./1_Creation_de_la_VM.md). Elle documente l'installation et la configuration de SSH pour accéder à la VM, en mettant l'accent sur les systèmes Linux. Une solution pour Windows n'est pas abordée ici, mais des outils comme [PuTTY](https://www.putty.org/) peuvent être envisagés.
+
+---
+
+## Qu'est-ce que SSH
+
+SSH (Secure Shell) est un protocole cryptographique qui permet de se connecter à une machine distante de manière sécurisée. Il est principalement utilisé pour l'administration des serveurs et des machines virtuelles via une interface en ligne de commande.
 
 ### Objectif
 
-J'ai une VM et je souhaite utiliser mon PC pour gérer cette VM depuis le terminal. L'objectif est de me connecter à la VM et d'afficher un message de bienvenue une fois connecté.
+Configurer une connexion SSH depuis votre terminal hôte vers la VM pour :
+- Accéder facilement à la VM.
+- Administrer la machine sans interface graphique.
 
-## Comment faire ?
+---
 
+## Comment faire
 
 ### 1. Installer SSH
 
-
 #### Alpine
 
-Tout d'abord, il faut installer le serveur SSH sur la VM :
+Pour installer le serveur SSH sur Alpine Linux :
 
 ```sh
 apk update
 apk add openssh
 ```
 
-Pour vérifier que SSH est bien installé, exécute la commande suivante :
+Vérifiez que SSH est bien installé avec la commande suivante :
 
 ```sh
 ssh -V
@@ -37,130 +63,126 @@ ssh -V
 
 #### Debian
 
-Installer OpenSSH:
+Pour installer OpenSSH sur Debian :
 
 ```bash
-sudo apt update
-sudo apt upgrade
+sudo apt update && sudo apt upgrade
 sudo apt install openssh-server
 ```
 
-Vérifier le statut de SSH:
+Vérifiez le statut du service SSH avec :
 
 ```bash
 sudo systemctl status ssh
 ```
 
-Cela affichera la version de SSH installée.
+---
 
 ### 2. Configurer SSH
 
 #### Activer SSH au démarrage pour Alpine
 
-Pour démarrer automatiquement le service SSH au démarrage du système, utilise cette commande :
+1. Ajoutez le service SSH au démarrage :
+   ```sh
+   rc-update add sshd
+   ```
+2. Démarrez immédiatement le service :
+   ```sh
+   service sshd start
+   ```
+3. Vérifiez que le service SSH est activé :
+   ```sh
+   rc-status | grep sshd
+   ```
 
-```sh
-rc-update add sshd
-```
-
-Puis démarre immédiatement le service SSH :
-
-```sh
-service sshd start
-```
+---
 
 ### 3. Autoriser la connexion root (optionnel)
 
-Par défaut, la connexion SSH root est désactivée sur Alpine. Si tu veux l'activer (optionnel), modifie le fichier de configuration SSH :
-
-```sh
-vi /etc/ssh/sshd_config
-```
-
-Trouve et modifie la ligne suivante :
-
-```sh
-#PermitRootLogin prohibit-password
-```
-
-Remplace-la par :
-
-```sh
-PermitRootLogin yes
-```
-
-Tu peux également changer le port d'écoute pour le mettre à 4242. Trouve et modifie la ligne suivante :
-
-```sh
-#Port 22
-```
-
-Remplace-la par :
-
-```sh
-Port 4242
-```
-Sauvegarde et quitte l'éditeur. 
+> **Attention :** L'activation de la connexion root via SSH peut représenter un risque de sécurité. À utiliser uniquement si nécessaire.
 
 #### Debian
 
-Re activer le service SSH pour mettre le nouveau port:
+1. Modifiez le fichier de configuration SSH :
+   ```bash
+   sudo nano /etc/ssh/sshd_config
+   ```
+2. Trouvez et remplacez la ligne suivante :
+   ```bash
+   #PermitRootLogin prohibit-password
+   ```
+   et
+   ```bash
+   #Port 22
+   ```
+   Par :
+   ```bash
+   PermitRootLogin yes
+   ```
+   et (le port que vous shouaitez)
+   ```bash
+   Port 4242
+   ```
 
-```bash
-sudo systemctl restart ssh
-```
+3. Redémarrez le service SSH :
+   ```bash
+   sudo systemctl restart ssh
+   ```
 
-#### Alpnine
+#### Alpine
 
-Ensuite, redémarre le service SSH pour appliquer les changements :
+1. Éditez le fichier de configuration SSH :
+   ```sh
+   vi /etc/ssh/sshd_config
+   ```
+2. Appliquez les mêmes modifications que pour Debian :
+   ```sh
+   PermitRootLogin yes
+   ```
+   et (le port que vous shouaitez)
+   ```bash
+   Port 4242
+   ```
+3. Redémarrez le service SSH :
+   ```sh
+   service sshd restart
+   ```
 
-```sh
-service sshd restart
-```
+---
 
 ### 4. Configurer VirtualBox
 
-Avant de pouvoir se connecter, tu dois rediriger le port de la VM vers ton PC hôte dans VirtualBox. 
+Configurez la redirection de port pour permettre la connexion SSH entre votre PC hôte et la VM :
 
-- Va dans **VirtualBox >> Paramètres >> Réseaux >> Adaptateur 1 >> Avancé >> Redirection de ports**.
-- Ajoute une règle avec les paramètres suivants :
-  - **Host port** : 4244
-  - **Guest port** : 4242
+1. **VirtualBox > Paramètres > Réseau > Adaptateur 1 > Avancé > Redirection de ports**.
+2. Ajoutez une règle avec les paramètres suivants :
+   - **Host port** : `4244`
+   - **Guest port** : `4242`
+3. Validez les modifications.
 
 ![rule_host_guest_port](./../ilustration/rule_host_guest_port.png)
 
-Après avoir configuré la redirection de port, réactive le service SSH pour appliquer le changement.
+---
 
 ### 5. Vérification de la connexion
 
-Enfin, vérifie si la connexion SSH fonctionne en essayant de te connecter depuis le terminal de ton PC hôte :
+Testez la connexion SSH depuis votre terminal hôte :
 
+#### Avec la redirection de port :
 ```sh
 ssh root@localhost -p 4244
 ```
 
-Ou si tu connais l'adresse IP de la VM :
-
+#### Avec l'adresse IP de la VM :
 ```sh
-ssh root@<ip_de_la_vm> -p 4244
+ssh root@<ip_de_la_vm> -p 4242
 ```
 
-Pour afficher le message sur un terminal spécifique de la VM, utilise la commande suivante :
-
-```sh
-tty
-```
-
-Puis exécute cette commande sur la VM pour envoyer un message sur le terminal :
-
-```sh
-echo "salut" > [résultat_de_tty_de_la_vm]
-```
-
-**Objectif atteint !**
-
-![ssh_succes](./../ilustration/ssh_succes.png)
+---
 
 ### Conclusion
 
-À ce stade, tu peux maintenant te connecter à ta VM à distance via SSH, ce qui rend l'administration de la VM plus facile et plus flexible. Tu peux désormais travailler directement depuis ton terminal, sans avoir à manipuler l'interface graphique.
+Vous avez maintenant configuré et testé SSH sur votre VM. Grâce à SSH, vous pouvez administrer la machine à distance de manière plus efficace, sans avoir besoin de son interface graphique.
+
+![ssh_succes](./../ilustration/ssh_succes.png)
+

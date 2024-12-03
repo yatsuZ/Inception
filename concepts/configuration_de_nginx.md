@@ -1,5 +1,12 @@
 # Configuration de Nginx pour TLS
 
+- [Configuration de Nginx pour TLS](#configuration-de-nginx-pour-tls)
+  - [Objectif](#objectif)
+  - [Étapes](#étapes)
+    - [Créer le Fichier de Configuration Nginx](#créer-le-fichier-de-configuration-nginx)
+    - [Explications des Directives](#explications-des-directives)
+  - [Documentation](#documentation)
+
 ## Objectif
 
 Configurer Nginx pour qu'il supporte TLS, en utilisant des certificats SSL pour sécuriser les connexions. Ce guide vous montrera comment créer une configuration Nginx simple pour activer TLSv1.3 et utiliser un certificat SSL.

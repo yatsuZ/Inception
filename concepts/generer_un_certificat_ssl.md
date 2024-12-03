@@ -1,3 +1,17 @@
+## Generer un certifica ?
+
+- [Generer un certifica ?](#generer-un-certifica-)
+  - [Qu'est-ce qu'OpenSSL ?](#quest-ce-quopenssl-)
+    - [Utilisation principale :](#utilisation-principale-)
+  - [Comment générer une clé avec OpenSSL ?](#comment-générer-une-clé-avec-openssl-)
+    - [1. Générer une clé privée RSA](#1-générer-une-clé-privée-rsa)
+    - [2. Générer une clé publique à partir de la clé privée](#2-générer-une-clé-publique-à-partir-de-la-clé-privée)
+    - [3. Créer une CSR (Certificate Signing Request)](#3-créer-une-csr-certificate-signing-request)
+    - [4. Générer un certificat auto-signé](#4-générer-un-certificat-auto-signé)
+  - [Extensions de Fichiers SSL/TLS](#extensions-de-fichiers-ssltls)
+- [Conclusion](#conclusion)
+  - [Documentation](#documentation)
+
 ### Qu'est-ce qu'OpenSSL ?
 
 **OpenSSL** est une bibliothèque open-source qui fournit des outils pour implémenter des protocoles de sécurité, comme **SSL (Secure Sockets Layer)** et **TLS (Transport Layer Security)**, dans les applications réseau. Il est largement utilisé pour sécuriser les communications entre les serveurs et les clients, notamment via HTTPS.

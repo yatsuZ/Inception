@@ -2,22 +2,23 @@
 
 Deuxième étape du projet : installation de Docker.
 
-
 - [2. Installation de Docker et Docker Compose](#2-installation-de-docker-et-docker-compose)
   - [Introduction](#introduction)
-  - [Qu'est-ce que Docker ?](#quest-ce-que-docker-)
-  - [Que permet Docker ?](#que-permet-docker-)
-  - [Comment installer Docker et Docker Compose sur Alpine ?](#comment-installer-docker-et-docker-compose-sur-alpine-)
+  - [Qu'est-ce que Docker](#quest-ce-que-docker)
+  - [Que permet Docker](#que-permet-docker)
+  - [Comment installer Docker et Docker Compose sur Alpine](#comment-installer-docker-et-docker-compose-sur-alpine)
     - [Étape 1 : Ajouter le dépôt Community](#étape-1--ajouter-le-dépôt-community)
     - [Étape 2 : Installer Docker](#étape-2--installer-docker)
     - [Étape 3 : Installer Docker Compose](#étape-3--installer-docker-compose)
-  - [Comment installer Docker et Docker Compose sur Alpine ?](#comment-installer-docker-et-docker-compose-sur-alpine--1)
+  - [Comment installer Docker et Docker Compose sur Debian](#comment-installer-docker-et-docker-compose-sur-debian)
+    - [Installation manuelle de Docker et Docker Compose sur Debian](#installation-manuelle-de-docker-et-docker-compose-sur-debian)
+
 
 ## Introduction
 
 Dans cette étape, nous installerons Docker et Docker Compose sur les systèmes Alpine Linux et Debian. Les étapes varient légèrement entre ces deux distributions, mais l’objectif reste le même : configurer un environnement prêt pour exécuter des conteneurs.
 
-## Qu'est-ce que Docker ?
+## Qu'est-ce que Docker
 
 ![docker illustration](./../ilustration/docker.png)
 
@@ -26,7 +27,7 @@ Il y a des explications détaillées dans la [documentation](./../concepts/docum
 Docker est [une plateforme](./../concepts/Plateforme_vs_aplication.md) open-source permettant de créer, déployer et exécuter des applications dans des conteneurs.  
 Les conteneurs sont des environnements légers et portables qui isolent les applications et leurs dépendances, garantissant ainsi que celles-ci fonctionnent de manière cohérente sur différents environnements.
 
-## Que permet Docker ?
+## Que permet Docker
 
 En résumé, Docker permet de faire fonctionner des services et des applications comme Nginx, MariaDB, et WordPress, peu importe l'OS de base.
 
@@ -40,7 +41,7 @@ Docker Compose permet de gérer plusieurs images et de les faire interagir entre
 - **Scalabilité** : Docker facilite le déploiement de multiples instances d'applications et leur mise à l'échelle horizontale.
 - **Efficacité** : Les conteneurs partagent le noyau du système d'exploitation hôte, ce qui les rend plus légers et rapides par rapport aux machines virtuelles traditionnelles.
 
-## Comment installer Docker et Docker Compose sur Alpine ?
+## Comment installer Docker et Docker Compose sur Alpine
 
 > Vous avez accés aux fichier [`script/installation_de_docker.sh`](../script/installation_de_docker.sh) et [`script/installation_de_docker_compose.sh`](../script/installation_de_docker_compose.sh) qui sont des script qui installe automatiquement docker et docker compose sur Alpine
 
@@ -124,10 +125,12 @@ voici le script [installation_de_docker_compose](./../script/installation_de_doc
    docker-compose --version
    ```
 
-## Comment installer Docker et Docker Compose sur Alpine ?
+Voici une réécriture de la section demandée :
 
-Comment installer Docker et Docker Compose sur Alpine ?
+## Comment installer Docker et Docker Compose sur Debian
 
-> Vous avez accés aux fichier [`script/install_docker_and_docker_compose_on_debian.sh`](../script/install_docker_and_docker_compose_on_debian.sh) qui est un script qui installe automatiquement docker et docker compose sur Alpine
+### Installation manuelle de Docker et Docker Compose sur Debian
 
+> Un script [`install_docker_and_docker_compose_on_debian.sh`](../script/install_docker_and_docker_compose_on_debian.sh) est disponible pour installer automatiquement Docker et Docker Compose sur Debian.
 
+Le script est bien commenté et coloré, ce qui vous permettra de comprendre chaque étape de l'installation. Si certaines informations ne sont pas claires, n'hésitez pas à chercher des explications supplémentaires.

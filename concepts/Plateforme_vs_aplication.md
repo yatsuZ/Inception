@@ -1,5 +1,13 @@
 # Plateforme
 
+- [Plateforme](#plateforme)
+  - [Bref resume](#bref-resume)
+    - [1. **Plateforme vs Application**](#1-plateforme-vs-application)
+    - [2. **Rôle d'une Plateforme**](#2-rôle-dune-plateforme)
+    - [3. **Exemple de Plateforme et Application**](#3-exemple-de-plateforme-et-application)
+
+## Bref resume
+
 En informatique, une **plateforme** est un environnement qui permet le développement, le déploiement et l'exécution d'applications ou de services. Elle fournit les outils et les services nécessaires pour créer et gérer des applications. Voici une distinction pour clarifier le concept :
 
 ### 1. **Plateforme vs Application**

@@ -1,18 +1,17 @@
 # Qu'est-ce que le **PID 1** ?
 
-- **Sur un système classique** :
-  - Le PID 1 est toujours attribué au **processus init** ou à son équivalent, qui est le **premier processus lancé par le noyau** Linux au démarrage du système.
-  - Ce processus init a des responsabilités cruciales, notamment :
-    - Lancer tous les autres processus du système.
-    - Gérer les signaux (comme `SIGTERM` ou `SIGHUP`) et les transmettre aux processus enfants.
-    - Nettoyer les processus "orphelins" (ceux dont le parent est mort) pour éviter les **zombies**.
-
-- **Dans un conteneur Docker** :
-  - Le processus exécuté par le conteneur (par exemple, un serveur NGINX, une application Python, etc.) devient le **PID 1** dans l'espace d'exécution du conteneur.
-  - Cela signifie que ce processus hérite des responsabilités du PID 1 :
-    - Gérer les signaux système.
-    - Nettoyer les processus enfants.
-    - Ne pas planter ou se terminer accidentellement, car cela arrêtera le conteneur entier.
+- [Qu'est-ce que le **PID 1** ?](#quest-ce-que-le-pid-1-)
+  - [Pourquoi le PID 1 est important en Docker ?](#pourquoi-le-pid-1-est-important-en-docker-)
+    - [1. **Gestion des signaux** :](#1-gestion-des-signaux-)
+    - [2. **Nettoyage des processus enfants** :](#2-nettoyage-des-processus-enfants-)
+    - [3. **Arrêt et redémarrage du conteneur** :](#3-arrêt-et-redémarrage-du-conteneur-)
+  - [Bonnes pratiques pour gérer le PID 1 dans un Dockerfile :](#bonnes-pratiques-pour-gérer-le-pid-1-dans-un-dockerfile-)
+    - [1. **Éviter les processus fragiles comme PID 1** :](#1-éviter-les-processus-fragiles-comme-pid-1-)
+    - [2. **Utiliser un gestionnaire de processus dédié** :](#2-utiliser-un-gestionnaire-de-processus-dédié-)
+    - [3. **Configurer correctement le `ENTRYPOINT`** :](#3-configurer-correctement-le-entrypoint-)
+    - [4. **Surveiller les signaux** :](#4-surveiller-les-signaux-)
+    - [5. **Exécuter un processus non-bloquant** :](#5-exécuter-un-processus-non-bloquant-)
+  - [Résumé](#résumé)
 
 ---
 

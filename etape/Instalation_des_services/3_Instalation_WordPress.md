@@ -1,37 +1,62 @@
 ## 3. Installation de WordPress
 
-**Objectif :** Créer un conteneur WordPress.  
-Voir [les règles](./../../concepts/regle_du_projet.md).
+- [3. Installation de WordPress](#3-installation-de-wordpress)
+- [Objectif](#objectif)
+- [Leçon](#leçon)
+- [WordPress](#wordpress)
+- [Comment faire](#comment-faire)
+  - [Arborescence](#arborescence)
+- [Le Dockerfile](#le-dockerfile)
+  - [Explication détaillée du Dockerfile](#explication-détaillée-du-dockerfile)
+  - [En résumé](#en-résumé)
+- [Explication des fichiers de configuration](#explication-des-fichiers-de-configuration)
+  - [`config_vim`](#config_vim)
+  - [`php82_php-fpm_d_www.conf`](#php82_php-fpm_d_wwwconf)
+  - [`start_wp.sh`](#start_wpsh)
+  - [Explication du script](#explication-du-script)
+  - [Conclusion](#conclusion)
+- [Test](#test)
+- [Fin](#fin)
+
+
+## Objectif
+L'objectif de cette leçon est de créer un conteneur Docker configuré pour héberger un site WordPress.  
+Pour plus de détails, consultez [les règles du projet](./../../concepts/regle_du_projet.md).
 
 ## Leçon
 
-1. Écrire un Dockerfile pour installer WordPress.
-2. Démarrer WordPress et configurer PHP.
-3. Utiliser les variables d'environnement.
+1. **Écrire un Dockerfile** pour installer WordPress dans un conteneur Docker.
+2. **Démarrer WordPress** et configurer PHP pour le bon fonctionnement du site.
+3. **Utiliser les variables d'environnement** pour personnaliser l'installation de WordPress.
 
 ## WordPress
 
-Pour une définition, consulte le [site officiel de WordPress](https://fr.wordpress.org/) ou la [documentation officielle](https://developer.wordpress.org/).
+WordPress est un système de gestion de contenu (CMS) open source, utilisé pour créer et gérer des sites web. Il est particulièrement apprécié pour sa flexibilité et sa grande communauté. Pour plus d'informations, consultez le [site officiel de WordPress](https://fr.wordpress.org/) ou la [documentation officielle](https://developer.wordpress.org/).
 
-## Comment faire ?
+## Comment faire
 
-1. Écrire le Dockerfile.
-2. Créer un fichier de configuration pour PHP.
-3. Copier les fichiers de configuration.
-4. Créer un script pour démarrer WordPress.
+1. **Écrire le Dockerfile** : Ce fichier est essentiel pour installer WordPress et PHP dans un conteneur Docker. Il configure l'environnement d'exécution du site.
+2. **Créer un fichier de configuration pour PHP** : Ce fichier définit les paramètres nécessaires pour faire fonctionner WordPress avec PHP-FPM.
+3. **Copier les fichiers de configuration** dans le conteneur pour que PHP et WordPress puissent interagir correctement.
+4. **Créer un script pour démarrer WordPress** : Ce script initie le démarrage de WordPress et de PHP-FPM dans le conteneur, facilitant ainsi le lancement du service.
 
 ### Arborescence
 
-```zsh
+Voici l'arborescence des fichiers du projet WordPress dans Docker :
+
+```bash
 ➜  wordpress git:(main) ✗ tree
 .
+├── Dockerfile                    # Le fichier Dockerfile pour construire l'image WordPress
 ├── conf
-│   ├── config_vim
-│   └── php82_php-fpm_d_www.conf
-├── Dockerfile
+│   ├── config_vim                # Configuration personnalisée pour l'éditeur Vim
+│   └── php82_php-fpm_d_www.conf  # Fichier de configuration PHP-FPM pour WordPress
 └── tools
-    └── start_wp.sh
+    └── start_wp.sh               # Script pour démarrer WordPress et PHP-FPM
+2 directories, 4 files
 ```
+
+Voici la section que tu peux intégrer dans ton fichier `.md` avec le Dockerfile et les explications détaillées :
 
 ## Le Dockerfile
 
@@ -107,7 +132,6 @@ ENTRYPOINT ["/usr/local/bin/start_wp.sh"]
 
 Ce Dockerfile construit un conteneur pour exécuter WordPress sur Alpine Linux, en installant toutes les dépendances nécessaires, y compris PHP et ses extensions, ainsi que WP-CLI. Il configure PHP-FPM pour traiter les requêtes PHP et utilise un script de démarrage pour initialiser et démarrer l'environnement WordPress.
 
-
 ## Explication des fichiers de configuration
 
 ### `config_vim`
@@ -140,60 +164,53 @@ clear_env = no
 
 Ces changements sont importants pour assurer que PHP-FPM fonctionne correctement dans l'architecture de conteneurs, facilitant ainsi la communication entre les différents services de l'application WordPress.
 
-Voici une explication détaillée du script `start_wp.sh` que tu as fourni pour installer et configurer WordPress :
-
 ### `start_wp.sh`
 
 ```sh
 #!/usr/bin/env sh
 
-# Définition des couleurs
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 RED='\033[0;31m'
 BLUE='\033[0;34m'
 RESET='\033[0m'
 
+export SQL_PASSWORD_ADMIN=$(cat /run/secrets/sql_password_admin)
+export SQL_PASSWORD_USER=$(cat /run/secrets/sql_password_user)
+
 echo -e "${BLUE}Vérification de l'installation de WordPress...${RESET}"
 
-# Vérifier si le répertoire de WordPress existe
 if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then
     echo -e "${YELLOW}Installation de WordPress...${RESET}"
 
     mkdir -p "$WP_PATH"
     chown -R root:root "$WP_PATH"
 
-    # Télécharger et extraire WordPress
     wget -q https://wordpress.org/latest.tar.gz -P /tmp
     tar -xzf /tmp/latest.tar.gz -C /tmp 
     mv /tmp/wordpress/* "$WP_PATH"
     rm -rf /tmp/latest.tar.gz /tmp/wordpress
 
-    # Créer le fichier wp-config.php si nécessaire
     if [ ! -f "$WP_PATH/wp-config.php" ]; then
-
-
-        # Attendre que la base de données soit prête
         until mysql -h "$SQL_HOST" -u "$SQL_NAME_USER" -p"$SQL_PASSWORD_USER" -e "SHOW DATABASES;" > /dev/null 2>&1; do
             echo -e "${YELLOW}En attente de la base de données...${RESET}"
-            echo -e "${YELLOW}Essai de connexion à : $SQL_HOST avec l'utilisateur : $SQL_NAME_USER${RESET}"
             sleep 2
         done
 
         echo -e "${GREEN}Connexion à la base de données réussie${RESET}"
 
-
         echo -e "${YELLOW}Configuration du \"wp-config.php\" ${RESET}"
-        # Utilisation de wp-cli pour créer le fichier wp-config.php
         sed "s/database_name_here/$SQL_NAME_DATABASE/;s/username_here/$SQL_NAME_USER/;s/password_here/$SQL_PASSWORD_USER/;s/localhost/$SQL_HOST/;" /var/www/wordpress/wp-config-sample.php > /var/www/wordpress/wp-config.php
         echo "define( 'WPLANG', 'fr_FR' );" >> /var/www/wordpress/wp-config.php
 
-        # Installation de WordPress avec WP-CLI
-        wp core install --url="https://$SERVER_NAME"  --title="$TITLE_OF_SITE" --admin_user="$SQL_NAME_USER" --admin_password="$SQL_PASSWORD_USER" --admin_email="email@example.com" --path="$WP_PATH"
+        wp core install --url="https://$SERVER_NAME"  --title="$TITLE_OF_SITE" --admin_user="$SQL_NAME_ADMIN" --admin_password="$SQL_PASSWORD_ADMIN" --admin_email="email@example.com" --path="$WP_PATH"
 
-        # Installation et activation des plugins, si nécessaire
         wp plugin install wp-redis --activate --path="$WP_PATH"
         wp redis enable --path="$WP_PATH"
+
+        echo -e "${YELLOW}Ajout de l'utilisateur WordPress $SQL_NAME_USER...${RESET}"
+        wp user create "$SQL_NAME_USER" "user@example.com" --role="subscriber" --user_pass="$SQL_PASSWORD_USER" --path="$WP_PATH"
+        echo -e "${GREEN}Utilisateur $SQL_NAME_USER ajouté avec succès.${RESET}"
 
         echo -e "${GREEN}Fichier wp-config.php créé et WordPress installé avec succès.${RESET}"
     else
@@ -203,40 +220,30 @@ else
     echo -e "${GREEN}WordPress est déjà installé, répertoire et wp-config.php trouvés.${RESET}"
 fi
 
-# Démarrer PHP-FPM
 echo -e "${BLUE}Démarrage de PHP-FPM...${RESET}"
 exec php-fpm82 -F
 ```
 
 ### Explication du script
 
-1. **En-tête du script**
-   - `#!/usr/bin/env sh` : Spécifie que le script doit être exécuté avec l'interpréteur shell `sh`.
+1. **Vérification de l'installation de WordPress** : Si le répertoire `WP_PATH` ou le fichier `wp-config.php` n'existent pas, le script procède à l'installation de WordPress.
+   
+2. **Installation de WordPress** : Le script télécharge l'archive de WordPress, l'extrait et déplace les fichiers dans le répertoire souhaité, tout en supprimant les fichiers temporaires.
 
-2. **Vérification de l'installation de WordPress**
-   - `if [ ! -d "$WP_PATH" ] || [ ! -f "$WP_PATH/wp-config.php" ]; then` : Vérifie si le répertoire de WordPress et le fichier `wp-config.php` existent. Si l'un de ces éléments est manquant, cela signifie que l'installation de WordPress doit être effectuée.
+3. **Configuration de WordPress** : Le script attend que la base de données MySQL soit disponible, puis configure `wp-config.php` avec les informations de connexion.
 
-3. **Installation de WordPress**
-   - Si l'installation est nécessaire, le script crée un répertoire pour WordPress, télécharge et décompresse l'archive de WordPress, puis déplace les fichiers dans le répertoire prévu.
-   - Les fichiers temporaires sont supprimés après l'installation.
+4. **Installation des plugins** : Le plugin `wp-redis` est installé et activé pour améliorer les performances de WordPress avec Redis.
 
-4. **Configuration de WordPress (si nécessaire)**
-   - Si le fichier `wp-config.php` n'existe pas, le script attend que la base de données soit prête avant de configurer ce fichier avec les informations de connexion appropriées. Il utilise `wp-cli` pour installer WordPress et configure le fichier `wp-config.php` avec les paramètres de la base de données.
+5. **Création d'un utilisateur WordPress** : Un utilisateur avec le rôle `subscriber` est ajouté à WordPress.
 
-5. **Installation des plugins**
-   - Le script installe et active le plugin `wp-redis` pour activer la gestion du cache Redis dans WordPress.
-
-6. **Démarrage de PHP-FPM**
-   - Une fois WordPress installé, le script démarre PHP-FPM pour exécuter WordPress.
+6. **Démarrage de PHP-FPM** : PHP-FPM est lancé pour exécuter WordPress.
 
 ### Conclusion
 
-Le script `start_wp.sh` automatise l'installation de WordPress dans le conteneur Docker, y compris la configuration du fichier `wp-config.php` et l'installation de plugins comme `wp-redis`. Il permet de vérifier l'état de l'installation avant de procéder et garantit que tous les composants nécessaires sont en place avant de démarrer PHP-FPM. Les sections qui ne sont pas nécessaires peuvent être commentées ou ajustées selon les besoins spécifiques du projet.
+Le script permet d'automatiser l'installation de WordPress dans un environnement Docker. Il configure la base de données, installe les plugins nécessaires et s'assure que PHP-FPM est prêt à gérer les requêtes WordPress.
 
 ## Test
 
-Pas de teste il faut manipuler avec les docker compose et les 2 autres services
+Pas de teste individuelle.
 
-## Fin 
-
-Voici la mise à jour de ton fichier `.md` avec les explications ajoutées à la section `start_wp.sh` :
+## Fin

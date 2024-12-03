@@ -7,7 +7,7 @@ Dans ce fichier, il y aura :
 	- [Notions à savoir](#notions-à-savoir)
 		- [Virtualisation](#virtualisation)
 		- [ISO et OS](#iso-et-os)
-	- [Quel choix faire ?](#quel-choix-faire-)
+	- [Quel choix faire](#quel-choix-faire)
 	- [Quel Hyperviseur / Logiciel de virtualisation ?](#quel-hyperviseur--logiciel-de-virtualisation-)
 		- [Choix d'un OS](#choix-dun-os)
 	- [Comment créer la VM ?](#comment-créer-la-vm-)
@@ -39,7 +39,7 @@ Le logiciel qui nous permet de faire la virtualisation s'appelle un [Hyperviseur
 
 **Qu'est-ce qu'un ISO ?**
 
-Un **ISO** est un type de **fichier image** qui représente une copie exacte d'un disque optique (CD, DVD). Il contient toutes les données et la structure du disque original, y compris les fichiers de démarrage, les partitions et la disposition des fichiers. Les fichiers ISO sont souvent utilisés pour installer des systèmes d'exploitation (OS) sur des machines virtuelles ou physiques sans utiliser de support physique comme un CD ou un DVD. 
+Un **ISO** est un type de **fichier image** qui représente une copie exacte d'un disque optique (CD, DVD). Il contient toutes les données et la structure du disque original, y compris les fichiers de démarrage, les partitions et la disposition des fichiers. Les fichiers ISO sont souvent utilisés pour installer des systèmes d'exploitation (OS) sur des machines virtuelles ou physiques sans utiliser de support physique comme un CD ou un DVD.
 
 **Qu'est-ce qu'un fichier image ?**
 
@@ -51,7 +51,7 @@ Un **OS (Operating System)** ou système d'exploitation est le logiciel principa
 
 ---
 
-## Quel choix faire ?
+## Quel choix faire
 
 ## Quel Hyperviseur / Logiciel de virtualisation ?
 
@@ -61,8 +61,9 @@ VirtualBox est celui utilisé sur les PC de l'école. J'ai déjà travaillé des
 
 ### Choix d'un OS
 
-Cela n'a pas d'importance pour le projet, puisque Docker nous permettra d'utiliser n'importe quel OS pour les services.
-Juste pour le projet, il est recommandé d'installer un OS avec une interface graphique.
+Le choix de l'OS n'a pas d'impact direct sur le projet, car Docker permet d'exécuter n'importe quel système d'exploitation pour les services conteneurisés. Cependant, pour faciliter la configuration et le confort d'utilisation, il est recommandé d'opter pour un OS avec une interface graphique.
+
+D'après mon expérience, **Debian** est un excellent choix pour sa simplicité et sa flexibilité. En outre, il permet d'intégrer une interface graphique dès l'installation de la VM, contrairement à **Alpine**, où cette configuration nécessite des étapes supplémentaires manuelles.
 
 
 ## Comment créer la VM ?

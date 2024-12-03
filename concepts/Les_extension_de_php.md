@@ -1,5 +1,14 @@
 # Les extension de Php sur alpine 3.19
 
+- [Les extension de Php sur alpine 3.19](#les-extension-de-php-sur-alpine-319)
+  - [Installation des extensions PHP](#installation-des-extensions-php)
+      - [Pourquoi installer ces extensions ?](#pourquoi-installer-ces-extensions-)
+    - [Conclusion](#conclusion)
+  - [FastCGI](#fastcgi)
+    - [Fonctionnement de FastCGI](#fonctionnement-de-fastcgi)
+    - [Avantages de FastCGI pour WordPress](#avantages-de-fastcgi-pour-wordpress)
+    - [Conclusion](#conclusion-1)
+
 ## Installation des extensions PHP
 
 Dans la ligne suivante de ton Dockerfile :
